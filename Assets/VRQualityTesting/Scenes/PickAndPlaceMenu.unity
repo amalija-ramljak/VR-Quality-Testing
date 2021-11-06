@@ -2497,6 +2497,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a4fe5cea7d07e244b95b54ee36a29cf, type: 3}
+--- !u!114 &972294260 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 841953099955922133, guid: 3a4fe5cea7d07e244b95b54ee36a29cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 972294259}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1019747081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2969,10 +2981,11 @@ MonoBehaviour:
   maxTranslationField: {fileID: 440537151}
   minRotationField: {fileID: 1608124352}
   maxRotationField: {fileID: 1186033702}
-  objectCount: {fileID: 1757690695}
-  useObjectTypeSquare: {fileID: 277416884}
-  useObjectTypeCylinder: {fileID: 1842280803}
-  useObjectTypeSphere: {fileID: 94782037}
+  objectCountField: {fileID: 1757690695}
+  useObjectTypeSquareField: {fileID: 277416884}
+  useObjectTypeCylinderField: {fileID: 1842280803}
+  useObjectTypeSphereField: {fileID: 94782037}
+  roundDurationField: {fileID: 972294260}
 --- !u!4 &1133170116
 Transform:
   m_ObjectHideFlags: 0
