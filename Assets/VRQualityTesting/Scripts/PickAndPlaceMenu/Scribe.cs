@@ -39,9 +39,9 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
 
             objectCountField.text = Settings.GetInt(PickAndPlaceKeys.ObjectCount, defaultValue: 0).ToString(CultureInfo.InvariantCulture);
 
-            useObjectTypeSquareField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSquare, defaultValue: true).ToString(CultureInfo.InvariantCulture);
-            useObjectTypeCylinderField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder, defaultValue: true).ToString(CultureInfo.InvariantCulture);
-            useObjectTypeSphereField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSphere, defaultValue: true).ToString(CultureInfo.InvariantCulture);
+            useObjectTypeSquareField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSquare, defaultValue: true);
+            useObjectTypeCylinderField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder, defaultValue: true);
+            useObjectTypeSphereField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSphere, defaultValue: true);
         }
 
         private void InitializeRoundSettings()

@@ -11,7 +11,7 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
         public const string ObjectCount = Prefix + "ObjectCount";
 
         public const string UseObjectTypeSquare = Prefix + "UseObjectTypeSquare";
-        public const string useObjectTypeCylinder = Prefix + "useObjectTypeCylinder";
+        public const string UseObjectTypeCylinder = Prefix + "useObjectTypeCylinder";
         public const string UseObjectTypeSphere = Prefix + "UseObjectTypeSphere";
 
         public const string RoundDuration = Prefix + "RoundDuration";
