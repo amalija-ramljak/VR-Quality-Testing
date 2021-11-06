@@ -8,9 +8,15 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
 {
     public class Scribe : MonoBehaviour
     {
-        // [SerializeField] private TMP_InputField minDistanceField;
+        [SerializeField] private TMP_InputField minTranslationField;
+        [SerializeField] private TMP_InputField maxTranslationField;
+        [SerializeField] private TMP_InputField minRotationField;
+        [SerializeField] private TMP_InputField maxRotationField;
+        [SerializeField] private TMP_InputField objectCount;
+        [SerializeField] private Toggle useObjectTypeSquare;
+        [SerializeField] private Toggle useObjectTypeCylinder;
+        [SerializeField] private Toggle useObjectTypeSphere;
         // [SerializeField] private TMP_Dropdown weaponTypeDropdown;
-        // [SerializeField] private Toggle useLaserToggle;
 
         private void Start() => InitializeSettings();
 
