@@ -1563,8 +1563,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VRQualityTesting.Scripts.ShooterMenu.Scribe, Assembly-CSharp
+      - m_Target: {fileID: 1133170115}
+        m_TargetAssemblyTypeName: VRQualityTesting.Scripts.PickAndPlaceMenu.Scribe,
+          Assembly-CSharp
         m_MethodName: SaveSettings
         m_Mode: 1
         m_Arguments:
@@ -3666,8 +3667,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tabs:
   - {fileID: 1901497835}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 151740610}
   initiallySelectedTabIndex: 0
 --- !u!114 &1420741016
@@ -4846,8 +4845,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VRQualityTesting.Scripts.ShooterMenu.Scribe, Assembly-CSharp
+      - m_Target: {fileID: 1133170115}
+        m_TargetAssemblyTypeName: VRQualityTesting.Scripts.PickAndPlaceMenu.Scribe,
+          Assembly-CSharp
         m_MethodName: SaveSettings
         m_Mode: 1
         m_Arguments:
