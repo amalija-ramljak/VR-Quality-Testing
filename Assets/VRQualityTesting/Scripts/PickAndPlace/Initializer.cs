@@ -14,7 +14,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         private void Awake()
         {
             InitializeTimer();
-            InitializeTargetSpawner();
+            InitializeObjectSpawner();
         }
 
         private void InitializeTimer()
@@ -22,23 +22,29 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             timer.TimeLeft = Settings.GetFloat(PickAndPlaceKeys.RoundDuration);
         }
 
-        private void InitializeTargetSpawner()
+        private void InitializeObjectSpawner()
         {
-            // targetSpawner.MinDistance = Settings.GetFloat(ShooterKeys.MinDistance);
-            // targetSpawner.MaxDistance = Settings.GetFloat(ShooterKeys.MaxDistance);
-            // targetSpawner.MinHeight = Settings.GetFloat(ShooterKeys.MinHeight);
-            // targetSpawner.MaxHeight = Settings.GetFloat(ShooterKeys.MaxHeight);
-            // targetSpawner.SpawnAngle = Settings.GetFloat(ShooterKeys.SpawnAngle);
-            // targetSpawner.SpawnCount = Settings.GetInt(ShooterKeys.SpawnCount);
-            // targetSpawner.DurationBetweenSpawns = Settings.GetFloat(ShooterKeys.DurationBetweenSpawns);
-            // targetSpawner.MinSize = Settings.GetFloat(ShooterKeys.MinSize);
-            // targetSpawner.MaxSize = Settings.GetFloat(ShooterKeys.MaxSize);
+            objectSpawner.ObjectMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMinDistance);
+            objectSpawner.ObjectMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxDistance);
+            objectSpawner.ObjectMaxRotationOffset = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset);
+            objectSpawner.ObjectMinSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMinSize);
+            objectSpawner.ObjectMaxSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize);
+            objectSpawner.UseObjectTypeSquare = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSquare);
+            objectSpawner.UseObjectTypeCylinder = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder);
+            objectSpawner.UseObjectTypeSphere = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSphere);
 
-            // targetSpawner.MovingProbability = Settings.GetFloat(ShooterKeys.MovingProbability);
-            // targetSpawner.MinVelocity = Settings.GetFloat(ShooterKeys.MinVelocity);
-            // targetSpawner.MaxVelocity = Settings.GetFloat(ShooterKeys.MaxVelocity);
-            // targetSpawner.MinOffset = Settings.GetFloat(ShooterKeys.MinOffset);
-            // targetSpawner.MaxOffset = Settings.GetFloat(ShooterKeys.MaxOffset);
+            objectSpawner.GoalMinDistance = Settings.GetFloat(PickAndPlaceKeys.GoalMinDistance);
+            objectSpawner.GoalMaxDistance = Settings.GetFloat(PickAndPlaceKeys.GoalMaxDistance);
+            objectSpawner.GoalMaxRotationOffset = Settings.GetFloat(PickAndPlaceKeys.GoalMaxRotationOffset);
+            objectSpawner.GoalMinSize = Settings.GetFloat(PickAndPlaceKeys.GoalMinSize);
+            objectSpawner.GoalMaxSize = Settings.GetFloat(PickAndPlaceKeys.GoalMaxSize);
+
+            objectSpawner.ObstacleMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinDistance);
+            objectSpawner.ObstacleMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxDistance);
+            objectSpawner.ObstacleMinCount = Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount);
+            objectSpawner.ObstacleMaxCount = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount);
+            objectSpawner.ObstacleMinSize = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinSize);
+            objectSpawner.ObstacleMaxSize = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxSize);
         }
     }
 }
