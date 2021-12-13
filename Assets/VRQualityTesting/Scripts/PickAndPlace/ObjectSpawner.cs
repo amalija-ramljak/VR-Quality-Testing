@@ -3,38 +3,24 @@ using Random = UnityEngine.Random;
 
 namespace VRQualityTesting.Scripts.PickAndPlace
 {
-
-        // public const string ObjectMinDistance = Prefix + "ObjectMinDistance";
-        // public const string ObjectMaxDistance = Prefix + "ObjectMaxDistance";
-        // public const string ObjectMaxRotationOffset = Prefix + "ObjectMaxRotationOffset";
-
-        // // goal for placing
-        // public const string GoalMinDistance = Prefix + "GoalMinDistance";
-        // public const string GoalMaxDistance = Prefix + "GoalMaxDistance";
-        // public const string GoalMaxRotationOffset = Prefix + "GoalMaxRotationOffset";
-
-        // // obstacles around object
-        // public const string ObstacleMinDistance = Prefix + "ObstacleMinDistance";
-        // public const string ObstacleMaxDistance = Prefix + "ObstacleMaxDistance";
-        // public const string ObstacleMinCount = Prefix + "ObstacleMinCount";
-        // public const string ObstacleMaxCount = Prefix + "ObstacleMaxCount";
-
-        // // object types
-        // public const string UseObjectTypeSquare = Prefix + "UseObjectTypeSquare";
-        // public const string UseObjectTypeCylinder = Prefix + "useObjectTypeCylinder";
-        // public const string UseObjectTypeSphere = Prefix + "UseObjectTypeSphere";
     public class ObjectSpawner : MonoBehaviour
     {
         public float ObjectMinDistance { get; set; }
         public float ObjectMaxDistance { get; set; }
         public float ObjectMaxRotationOffset { get; set; }
+        public float ObjectMinSize { get; set; }
+        public float ObjectMaxSize { get; set; }
         public float GoalMinDistance { get; set; }
         public float GoalMaxDistance { get; set; }
         public float GoalMaxRotationOffset { get; set; }
+        public float GoalMinSize { get; set; }
+        public float GoalMaxSize { get; set; }
         public float ObstacleMinDistance { get; set; }
         public float ObstacleMaxDistance { get; set; }
         public int ObstacleMinCount { get; set; }
         public int ObstacleMaxCount { get; set; }
+        public float ObstacleMinSize { get; set; }
+        public float ObstacleMaxSize { get; set; }
         public bool UseObjectTypeSquare { get; set; }
         public bool UseObjectTypeCylinder { get; set; }
         public bool UseObjectTypeSphere { get; set; }
