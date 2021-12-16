@@ -10,26 +10,26 @@ namespace VRQualityTesting.Scripts.Core
         /// <summary>
         /// What exactly is being tested?
         /// </summary>
-        public string StudyID { get; }
+        string StudyID { get; }
 
         /// <summary>
         /// Who are we testing?
         /// </summary>
-        public string ParticipantID { get; }
+        string ParticipantID { get; }
 
         /// <summary>
         /// Which game do we test on?
         /// </summary>
-        public GameTitle GameTitle { get; }
+        GameTitle GameTitle { get; }
 
         /// <summary>
         /// Returns summary of the session without going into small details.
         /// </summary>
-        public List<string> GeneralInformation { get; }
+        List<string> GeneralInformation { get; }
 
         /// <summary>
         /// Returns details of the session which are used for a more thorough analysis.
         /// </summary>
-        public List<string> DetailedInformation { get; }
+        List<string> DetailedInformation { get; }
     }
 }

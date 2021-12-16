@@ -33,11 +33,16 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             objectSpawner.UseObjectTypeCylinder = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder);
             objectSpawner.UseObjectTypeSphere = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSphere);
 
-            objectSpawner.GoalMinDistance = Settings.GetFloat(PickAndPlaceKeys.GoalMinDistance);
-            objectSpawner.GoalMaxDistance = Settings.GetFloat(PickAndPlaceKeys.GoalMaxDistance);
-            objectSpawner.GoalMaxRotationOffset = Settings.GetFloat(PickAndPlaceKeys.GoalMaxRotationOffset);
-            objectSpawner.GoalMinSize = Settings.GetFloat(PickAndPlaceKeys.GoalMinSize);
-            objectSpawner.GoalMaxSize = Settings.GetFloat(PickAndPlaceKeys.GoalMaxSize);
+            //objectSpawner.GoalMinDistance = Settings.GetFloat(PickAndPlaceKeys.GoalMinDistance);
+            //objectSpawner.GoalMaxDistance = Settings.GetFloat(PickAndPlaceKeys.GoalMaxDistance);
+            //objectSpawner.GoalMaxRotationOffset = Settings.GetFloat(PickAndPlaceKeys.GoalMaxRotationOffset);
+            //objectSpawner.GoalMinSize = Settings.GetFloat(PickAndPlaceKeys.GoalMinSize);
+            //objectSpawner.GoalMaxSize = Settings.GetFloat(PickAndPlaceKeys.GoalMaxSize);
+
+            objectSpawner.GoalDistance = Settings.GetFloat(PickAndPlaceKeys.GoalDistance);
+            objectSpawner.GoalRotationOffset = Settings.GetFloat(PickAndPlaceKeys.GoalRotationOffset);
+            objectSpawner.GoalSize = Settings.GetFloat(PickAndPlaceKeys.GoalSize);
+            objectSpawner.GoalHeight = Settings.GetFloat(PickAndPlaceKeys.GoalHeight);
 
             objectSpawner.ObstacleMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinDistance);
             objectSpawner.ObstacleMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxDistance);

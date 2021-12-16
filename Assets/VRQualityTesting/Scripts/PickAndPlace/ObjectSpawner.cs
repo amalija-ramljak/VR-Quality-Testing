@@ -10,17 +10,29 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         public float ObjectMaxRotationOffset { get; set; }
         public float ObjectMinSize { get; set; }
         public float ObjectMaxSize { get; set; }
-        public float GoalMinDistance { get; set; }
-        public float GoalMaxDistance { get; set; }
-        public float GoalMaxRotationOffset { get; set; }
-        public float GoalMinSize { get; set; }
-        public float GoalMaxSize { get; set; }
+        public float ObjectMinAngleHeight { get; set; }
+        public float ObjectMaxAngleHeight { get; set; }
+
+        public float GoalDistance { get; set; }
+        public float GoalRotationOffset { get; set; }
+        public float GoalSize { get; set; }
+        public float GoalHeight { get; set; }
+
+        //public float GoalMinDistance { get; set; }
+        //public float GoalMaxDistance { get; set; }
+        //public float GoalMaxRotationOffset { get; set; }
+        //public float GoalMinSize { get; set; }
+        //public float GoalMaxSize { get; set; }
+        //public float GoalMinAngleHeight { get; set; }
+        //public float GoalMaxAngleHeight { get; set; }
+
         public float ObstacleMinDistance { get; set; }
         public float ObstacleMaxDistance { get; set; }
         public int ObstacleMinCount { get; set; }
         public int ObstacleMaxCount { get; set; }
         public float ObstacleMinSize { get; set; }
         public float ObstacleMaxSize { get; set; }
+
         public bool UseObjectTypeSquare { get; set; }
         public bool UseObjectTypeCylinder { get; set; }
         public bool UseObjectTypeSphere { get; set; }
@@ -32,67 +44,99 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         [SerializeField] private GameObject goalPrefab;
         private float _currentDuration;
 
-        private void Start() => SpawnObjects();
+        private bool flag = false;
+
+        private void Start()
+        {
+            SpawnObject();
+            SpawnGoal();
+        }
 
         public void OnTargetHit()
         {
-            // if (DurationBetweenSpawns > 0) return;
-            // _targetsHitSinceLastSpawn++;
-
-            // if (_targetsHitSinceLastSpawn == SpawnCount)
-            // {
-            //     SpawnTargets();
-            //     _targetsHitSinceLastSpawn = 0;
-            // }
+            flag = false;
         }
 
         private void Update()
         {
-            // if (DurationBetweenSpawns <= 0) return;
-            // _currentDuration += Time.deltaTime;
-
-            // if (_currentDuration >= DurationBetweenSpawns)
-            // {
-            //     SpawnTargets();
-            //     _currentDuration = 0;
-            // }
+            if (flag == false)
+            {
+                SpawnObject();
+            }
         }
 
-        private void SpawnObjects()
+        private void SpawnObject()
         {
-            // for (var i = 0; i < SpawnCount; i++)
-            // {
-            //     var target = Instantiate(targetPrefab, GetRandomTargetPosition(), Quaternion.identity);
-            //     target.transform.localScale = GetRandomTargetSize();
-            //     target.transform.LookAt(2 * target.transform.position);
+            flag = true;
 
-            //     if (Random.value < MovingProbability)
-            //     {
-            //         target.transform.GetComponent<Target>().Velocity = Random.Range(MinVelocity, MaxVelocity);
-            //         target.transform.GetComponent<Target>().Offset = Random.Range(MinOffset, MaxOffset);
-            //     }
-            // }
+            var objectPrefab = Instantiate(objectSquarePrefab, GetRandomObjectPosition(), Quaternion.identity);
+            objectPrefab.transform.localScale = GetRandomObjectSize();
+            objectPrefab.transform.LookAt(2 * objectPrefab.transform.position);
         }
 
-        // private Vector3 GetRandomTargetPosition()
-        // {
-            // var radius = Random.Range(MinDistance, MaxDistance);
 
-            // var minAngle = -SpawnAngle / 2 * Mathf.Deg2Rad;
-            // var maxAngle = +SpawnAngle / 2 * Mathf.Deg2Rad;
-            // var angle = Random.Range(minAngle, maxAngle);
+        private void SpawnGoal()
+        {
+            var goal = Instantiate(goalPrefab, GetGoalPosition(), Quaternion.identity);
+            goal.transform.localScale = GetGoalSize();
+        }
 
-            // var x = radius * Mathf.Cos(angle);
-            // var y = Random.Range(MinHeight, MaxHeight);
-            // var z = radius * Mathf.Sin(angle);
+        private Vector3 GetRandomObjectPosition()
+        {
+            var radius = Random.Range(ObjectMinDistance, ObjectMaxDistance);
 
-            // return new Vector3(x, y, z);
-        // }
+            var angleOffset = ObjectMaxRotationOffset * Mathf.Deg2Rad;
+            var angle = Random.Range(-angleOffset, +angleOffset);
 
-        // private Vector3 GetRandomTargetSize()
-        // {
-        //     var size = Random.Range(MinSize, MaxSize);
-        //     return new Vector3(size, size, 1);
-        // }
+            var x = radius * Mathf.Cos(angle);
+            //var y = Random.Range(ObjectMinAngleHeight, ObjectMaxAngleHeight);
+            var y = Random.Range(0, 5);
+            var z = radius * Mathf.Sin(angle);
+
+            return new Vector3(x, y, z);
+        }
+
+        private Vector3 GetRandomObjectSize()
+        {
+            var size = Random.Range(ObjectMinSize, ObjectMaxSize);
+            return new Vector3(size, size, size);
+        }
+
+        //private Vector3 GetRandomGoalPosition()
+        //{
+        //    var radius = Random.Range(GoalMinDistance, GoalMaxDistance);
+
+        //    var angleOffset = GoalMaxRotationOffset * Mathf.Deg2Rad;
+        //    var angle = Random.Range(-angleOffset, +angleOffset);
+
+        //    var x = radius * Mathf.Cos(angle);
+        //    //var y = Random.Range(GoalMinAngleHeight, GoalMaxAngleHeight);
+        //    var y = Random.Range(2, 5);
+        //    var z = radius * Mathf.Sin(angle);
+
+        //    return new Vector3(x, y, z);
+        //}
+
+        //private Vector3 GetRandomGoalSize()
+        //{
+        //    var size = Random.Range(GoalMinSize, GoalMaxSize);
+        //    return new Vector3(size, 0.5f, size);
+        //}
+
+        private Vector3 GetGoalPosition()
+        {
+            var angleOffset = GoalRotationOffset * Mathf.Deg2Rad;
+
+            var x = GoalDistance * Mathf.Cos(angleOffset);
+            var y = GoalHeight;
+            var z = GoalDistance * Mathf.Sin(angleOffset);
+
+            return new Vector3(x, y, z);
+        }
+
+        private Vector3 GetGoalSize()
+        {
+            return new Vector3(GoalSize, 1, GoalSize);
+        }
     }
 }
