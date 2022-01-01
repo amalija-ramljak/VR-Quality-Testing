@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +14,10 @@ public class NewScript : MonoBehaviour
     private GameObject proxy_obj;
     //private GameObject proxy_obj2;
     Collider obstacle_Collider, obj_Collider;
+
+    private List<Vector3> obstacle_pocetneKordinate =  new List<Vector3>();
+    private List<Vector3> obstacle_trenutneKordinate =  new List<Vector3>();
+    int broj_Dotaknutih_Kocaka = 0;
 
     int global=0;
 
@@ -34,6 +38,7 @@ public class NewScript : MonoBehaviour
                 Vector3 position = new Vector3( Random.Range(obj.transform.position.x-0.5f,obj.transform.position.x+0.5f), 
                                                 Random.Range(obj.transform.position.y-0.5f,obj.transform.position.y+0.5f), 
                                                 Random.Range(obj.transform.position.z-0.5f,obj.transform.position.z+0.5f));
+                obstacle_pocetneKordinate.Add(position);
                 
                 proxy = Instantiate(obstacleToBeSpawned, position, Quaternion.identity, parent);
                 ProxyList.Add(proxy);                               
@@ -44,10 +49,11 @@ public class NewScript : MonoBehaviour
                     
                     if (obstacle_Collider.bounds.Intersects(obj_Collider.bounds))
                     {
-                        
+                        obstacle_pocetneKordinate.RemoveAt(obstacle_pocetneKordinate.Count - 1);
                         Vector3 backup_position = new Vector3( Random.Range(obj.transform.position.x-5f,obj.transform.position.x+5f), 
                                                                Random.Range(obj.transform.position.y-5f,obj.transform.position.y+5f), 
                                                                Random.Range(obj.transform.position.z-5f,obj.transform.position.z+5f));
+                        obstacle_pocetneKordinate.Add(backup_position);
 
                         Destroy(proxy);
                         proxy = Instantiate(obstacleToBeSpawned, backup_position, Quaternion.identity, parent);
@@ -81,10 +87,26 @@ public class NewScript : MonoBehaviour
     {
         if( global==1 )
         {
+            var childrenTransforms = parent.GetComponentInChildren<Transform>(); int skip = 0;
+            foreach(Transform t in childrenTransforms)
+            {
+                if(skip == 0){skip++; continue;}
+                obstacle_trenutneKordinate.Add(t.position);
+                //Debug.Log("transform position" + t.position.x); skip++;
+            }
             for(int element=0; element<ProxyList.Count; element++){
+                //obstacle_trenutneKordinate.Add(obstacle_pocetneKordinate[obstacle_pocetneKordinate.Count-numberOfObstacles]);
+                //obstacle_trenutneKordinate.Add(ProxyList[element].transform.position);
+                //obstacle_trenutneKordinate.Add(GameObject.Find("obstacle(Clone)").transform.position);
+                //Debug.Log("transform position" + GameObject.Find("obstacle(Clone)").transform.position.x);
+                //Debug.Log("transform position" + ProxyList[element].transform.position.x); ne radi
+                
                 Destroy(ProxyList[element]);
             }
             Destroy(proxy_obj);
+            obstacle_ukupnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
+            obstacle_kordinatnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
+            //Debug.Log(broj_Dotaknutih_Kocaka);
             spawnObject();
             spawnObstacles();
             global = 0;
@@ -109,4 +131,25 @@ public class NewScript : MonoBehaviour
             print("Ćao");
         }
     } */
+
+    void obstacle_ukupnaUdaljenostOdPocPozicije(List<Vector3> poc_kord, List<Vector3> tren_kord){
+        broj_Dotaknutih_Kocaka = 0;
+        for(int i=0; i<poc_kord.Count; i++){
+            float dist = Vector3.Distance(poc_kord[i], tren_kord[i]);
+            //Debug.Log("OBS UDALJENOST" + dist);
+            if (dist != 0) {broj_Dotaknutih_Kocaka++;}
+        }
+    }
+    void obstacle_kordinatnaUdaljenostOdPocPozicije(List<Vector3> poc_kord, List<Vector3> tren_kord){
+        broj_Dotaknutih_Kocaka = 0;
+        for(int i=0; i<poc_kord.Count; i++){
+            float x = poc_kord[i].x - tren_kord[i].x;
+            //Debug.Log("XXX" + x);
+            float y = poc_kord[i].y - tren_kord[i].y;
+            //Debug.Log("YYY" + y);
+            float z = poc_kord[i].z - tren_kord[i].z;
+            //Debug.Log("ZZZ" + z);
+            if (x != 0 || y != 0 || z != 0) {broj_Dotaknutih_Kocaka++;}
+        }
+    }
 }
