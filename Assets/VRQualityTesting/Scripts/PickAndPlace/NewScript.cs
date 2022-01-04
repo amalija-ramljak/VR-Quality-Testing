@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VRQualityTesting.Scripts.Core;
 using VRQualityTesting.Scripts.PickAndPlace;
 
 public class NewScript : MonoBehaviour
@@ -26,12 +28,12 @@ public class NewScript : MonoBehaviour
 
     public void spawnObject()
     {
-        Vector3 obj_spawn_position = new Vector3(Random.Range(0f, 10f), Random.Range(0f, 10f), Random.Range(0f, 10f));
+        Vector3 obj_spawn_position = new Vector3(UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f));
 
         objects.Add(new PAPObject(obj_spawn_position));
-        //obj.transform.position.x = Random.Range(0f, 10f);
-        //obj.transform.position.y = Random.Range(0f, 10f);
-        //obj.transform.position.z = Random.Range(0f, 10f);
+        //obj.transform.position.x = UnityEngine.Random.Range(0f, 10f);
+        //obj.transform.position.y = UnityEngine.Random.Range(0f, 10f);
+        //obj.transform.position.z = UnityEngine.Random.Range(0f, 10f);
         proxy_obj = Instantiate(obj, obj_spawn_position, Quaternion.identity, parent);
     }
 
@@ -41,9 +43,9 @@ public class NewScript : MonoBehaviour
         obj_Collider = obj.GetComponent<Collider>();
         for (int i = 0; i < numberOfObstacles; i++)
         {
-            Vector3 position = new Vector3(Random.Range(obj.transform.position.x - 0.5f, obj.transform.position.x + 0.5f),
-                                            Random.Range(obj.transform.position.y - 0.5f, obj.transform.position.y + 0.5f),
-                                            Random.Range(obj.transform.position.z - 0.5f, obj.transform.position.z + 0.5f));
+            Vector3 position = new Vector3(UnityEngine.Random.Range(obj.transform.position.x - 0.5f, obj.transform.position.x + 0.5f),
+                                            UnityEngine.Random.Range(obj.transform.position.y - 0.5f, obj.transform.position.y + 0.5f),
+                                            UnityEngine.Random.Range(obj.transform.position.z - 0.5f, obj.transform.position.z + 0.5f));
             obstacle_pocetneKordinate.Add(position);
 
             proxy = Instantiate(obstacleToBeSpawned, position, Quaternion.identity, parent);
@@ -56,9 +58,9 @@ public class NewScript : MonoBehaviour
                 if (obstacle_Collider.bounds.Intersects(obj_Collider.bounds))
                 {
                     obstacle_pocetneKordinate.RemoveAt(obstacle_pocetneKordinate.Count - 1);
-                    Vector3 backup_position = new Vector3(Random.Range(obj.transform.position.x - 5f, obj.transform.position.x + 5f),
-                                                           Random.Range(obj.transform.position.y - 5f, obj.transform.position.y + 5f),
-                                                           Random.Range(obj.transform.position.z - 5f, obj.transform.position.z + 5f));
+                    Vector3 backup_position = new Vector3(UnityEngine.Random.Range(obj.transform.position.x - 5f, obj.transform.position.x + 5f),
+                                                           UnityEngine.Random.Range(obj.transform.position.y - 5f, obj.transform.position.y + 5f),
+                                                           UnityEngine.Random.Range(obj.transform.position.z - 5f, obj.transform.position.z + 5f));
                     obstacle_pocetneKordinate.Add(backup_position);
 
                     Destroy(proxy);

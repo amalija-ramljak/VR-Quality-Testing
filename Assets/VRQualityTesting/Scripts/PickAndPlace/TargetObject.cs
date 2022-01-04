@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace VRQualityTesting.Scripts.PickAndPlace
@@ -16,12 +18,12 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             this.spawnPosition = spawnPosition;
         }
 
-        public setPlaced(bool isPlaced)
+        public void setPlaced(bool isPlaced)
         {
             this.isPlaced = isPlaced;
         }
 
-        public setClutter(List<PAPObstacle> clutter)
+        public void setClutter(List<PAPObstacle> clutter)
         {
             this.clutter = clutter;
         }

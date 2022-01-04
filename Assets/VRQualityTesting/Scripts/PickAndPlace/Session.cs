@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using UnityEngine;
 using VRQualityTesting.Scripts.Core;
 using VRQualityTesting.Scripts.MainMenu;
 using VRQualityTesting.Scripts.PickAndPlaceMenu;
@@ -79,7 +82,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                         Environment.NewLine, Environment.NewLine,
                         $"# Object {idx}",
                         $"Created at time: {obj.BirthTimestamp.ToString(TimestampFormat)}",
-                        $"Placed at time: {obj.DeathTimestamp.ToStrng(TimestampFormat)}",
+                        $"Placed at time: {obj.DeathTimestamp.ToString(TimestampFormat)}",
                         $"Clutter data ({obj.clutter.Count} objects in clutter)",
                         "Initial position, Final position, Euclidean distance",
                     });
