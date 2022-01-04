@@ -3,19 +3,42 @@ using UnityEngine;
 
 namespace VRQualityTesting.Scripts.PickAndPlace
 {
-    public class TargetObject : MonoBehaviour
+    public class PAPObject
     {
         public DateTime BirthTimestamp { get; } = DateTime.Now;
-        private SessionReporter _sessionReporter;
+        public DateTime DeathTimestamp { get; set; }
+        public bool isPlaced = false;
+        public Vector3 spawnPosition;
+        public List<PAPObstacle> clutter;
 
-        private void Awake()
+        public PAPObject(Vector3 spawnPosition)
         {
-            // _sessionReporter = FindObjectOfType<SessionReporter>();
+            this.spawnPosition = spawnPosition;
         }
 
-        private void OnCollisionEnter(Collision collision)
+        public setPlaced(bool isPlaced)
         {
-            // _sessionReporter.OnBoxCollision(this, collision);
+            this.isPlaced = isPlaced;
+        }
+
+        public setClutter(List<PAPObstacle> clutter)
+        {
+            this.clutter = clutter;
+        }
+    }
+
+    public class PAPObstacle
+    {
+        public Vector3 initialCoords;
+        public Vector3 finalCoords;
+
+        public PAPObstacle(
+            Vector3 initialCoordinates,
+            Vector3 finalCoordinates
+        )
+        {
+            this.initialCoords = initialCoordinates;
+            this.finalCoords = finalCoordinates;
         }
     }
 }
