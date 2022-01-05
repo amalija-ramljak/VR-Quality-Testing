@@ -3046,11 +3046,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 4227810997269982071, guid: c748ba827e279744a9b8111c3dbfe801, type: 3}
-  squarePrefab: {fileID: 0}
-  cylinderPrefab: {fileID: 0}
-  spherePrefab: {fileID: 0}
-  obstaclePrefab: {fileID: 0}
-  objectParent: {fileID: 0}
+  squarePrefab: {fileID: 4227810997269982071, guid: c748ba827e279744a9b8111c3dbfe801,
+    type: 3}
+  cylinderPrefab: {fileID: 3891573544794638391, guid: 8303adf10148125498a32ec1d084d280,
+    type: 3}
+  spherePrefab: {fileID: 1079179599611315254, guid: 0c262944a980b154ab002ba834e19a28,
+    type: 3}
+  obstaclePrefab: {fileID: 4607589910967040424, guid: f13f2e207ec8a2346a41a5f76c5342ec,
+    type: 3}
+  objectParent: {fileID: 1270042993}
 --- !u!1001 &1926759973
 PrefabInstance:
   m_ObjectHideFlags: 0
