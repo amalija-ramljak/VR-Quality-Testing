@@ -109,6 +109,7 @@ public class NewScript : MonoBehaviour
         Collider obstacle_Collider;
         GameObject proxy = null;
         Vector3 position;
+        float randObstacleSize;
 
         bool newLoop = true;
         int randObstacleCount = UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount + 1);
@@ -127,6 +128,9 @@ public class NewScript : MonoBehaviour
                 proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
                 obstacle_Collider = proxy.GetComponent<Collider>();
             } while (obstacle_Collider.bounds.Intersects(obj_Collider.bounds));
+
+            randObstacleSize = UnityEngine.Random.Range(obstacleMinSize, obstacleMaxSize);
+            proxy.transform.localScale = new Vector3(randObstacleSize, randObstacleSize, randObstacleSize);
 
             obstacle_pocetneKordinate.Add(position);
             ProxyList.Add(proxy);
