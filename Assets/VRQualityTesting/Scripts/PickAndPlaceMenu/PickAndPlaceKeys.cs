@@ -7,6 +7,8 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
         // object to pick and place
         public const string ObjectMinDistance = Prefix + "ObjectMinDistance";
         public const string ObjectMaxDistance = Prefix + "ObjectMaxDistance";
+        public const string ObjectMinHeight = Prefix + "ObjectMinHeight";
+        public const string ObjectMaxHeight = Prefix + "ObjectMaxHeight";
         public const string ObjectMaxRotationOffset = Prefix + "ObjectMaxRotationOffset";
         public const string ObjectMinSize = Prefix + "ObjectMinSize";
         public const string ObjectMaxSize = Prefix + "ObjectMaxSize";

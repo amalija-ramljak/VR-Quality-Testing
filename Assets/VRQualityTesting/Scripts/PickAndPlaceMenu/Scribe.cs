@@ -12,6 +12,8 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
         [Header("Objects")]
         [SerializeField] private TMP_InputField objectMinDistanceField;
         [SerializeField] private TMP_InputField objectMaxDistanceField;
+        [SerializeField] private TMP_InputField objectMinHeightField;
+        [SerializeField] private TMP_InputField objectMaxHeightField;
         [SerializeField] private TMP_InputField objectMaxRotationOffsetField;
         [SerializeField] private TMP_InputField objectMinSizeField;
         [SerializeField] private TMP_InputField objectMaxSizeField;
@@ -61,6 +63,8 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
         {
             objectMinDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMinDistance, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
             objectMaxDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxDistance, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
+            objectMinHeightField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMinHeight, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
+            objectMaxHeightField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxHeight, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
 
             objectMaxRotationOffsetField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset, defaultValue: 180f).ToString(CultureInfo.InvariantCulture);
 

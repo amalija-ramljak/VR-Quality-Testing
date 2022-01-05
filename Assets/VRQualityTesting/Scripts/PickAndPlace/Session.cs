@@ -44,6 +44,8 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                     $"{Environment.NewLine}# Object settings",
                     $"Minimum distance: {Settings.GetFloat(PickAndPlaceKeys.ObjectMinDistance).ToString(CultureInfo.InvariantCulture)}",
                     $"Maximum distance: {Settings.GetFloat(PickAndPlaceKeys.ObjectMaxDistance).ToString(CultureInfo.InvariantCulture)}",
+                    $"Minimum height: {Settings.GetFloat(PickAndPlaceKeys.ObjectMinHeight).ToString(CultureInfo.InvariantCulture)}",
+                    $"Maximum height: {Settings.GetFloat(PickAndPlaceKeys.ObjectMaxHeight).ToString(CultureInfo.InvariantCulture)}",
                     $"Maximum rotation offset: {Settings.GetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset).ToString(CultureInfo.InvariantCulture)}",
                     $"Minimum size: {Settings.GetFloat(PickAndPlaceKeys.ObjectMinSize).ToString(CultureInfo.InvariantCulture)}",
                     $"Maximum size: {Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize).ToString(CultureInfo.InvariantCulture)}",

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,11 +16,8 @@ public class NewScript : MonoBehaviour
     [SerializeField] private GameObject spherePrefab;
     [SerializeField] private GameObject obstaclePrefab;
     [SerializeField] Transform objectParent;
-    private GameObject proxy;
     private List<GameObject> ProxyList = new List<GameObject>();
     private GameObject proxy_obj;
-    //private GameObject proxy_obj2;
-    Collider obstacle_Collider, obj_Collider;
 
     private List<Vector3> obstacle_pocetneKordinate = new List<Vector3>();
     private List<Vector3> obstacle_trenutneKordinate = new List<Vector3>();
@@ -29,6 +27,8 @@ public class NewScript : MonoBehaviour
 
     private float objectMinDistance;
     private float objectMaxDistance;
+    private float objectMinHeight;
+    private float objectMaxHeight;
     private float objectMaxRotationOffset;
     private float objectMinSize;
     private float objectMaxSize;
@@ -50,6 +50,8 @@ public class NewScript : MonoBehaviour
     {
         objectMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMinDistance, defaultValue: 1f);
         objectMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxDistance, defaultValue: 2f);
+        objectMinHeight = Settings.GetFloat(PickAndPlaceKeys.ObjectMinHeight, defaultValue: 1f);
+        objectMaxHeight = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxHeight, defaultValue: 2f);
         objectMaxRotationOffset = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset, defaultValue: 180f);
         objectMinSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMinSize, defaultValue: 1f);
         objectMaxSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize, defaultValue: 2f);
@@ -72,19 +74,27 @@ public class NewScript : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
     void Start()
     {
+        spawnNewPlacement();
+    }
+
+    public void spawnNewPlacement()
+    {
+        objectParent.rotation = Quaternion.identity;
         spawnObject();
         spawnObstacles();
+        objectParent.Rotate(new Vector3(0f, UnityEngine.Random.Range(-objectMaxRotationOffset, objectMaxRotationOffset), 0f));
     }
 
     public void spawnObject()
     {
-        // distance - x
+        // distance
         float x = UnityEngine.Random.Range(objectMinDistance, objectMaxDistance);
 
-        Vector3 obj_spawn_position = new Vector3(UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f));
+        // x distance, y height, z should be automatic with rotation
+        // TODO: test z/rotation
+        Vector3 obj_spawn_position = new Vector3(x, UnityEngine.Random.Range(objectMinHeight, objectMaxHeight), 0f);
 
         objects.Add(new PAPObject(obj_spawn_position));
         //obj.transform.position.x = UnityEngine.Random.Range(0f, 10f);
@@ -96,7 +106,9 @@ public class NewScript : MonoBehaviour
     public void spawnObstacles()
     {
         var clutter = new List<PAPObstacle>();
-        obj_Collider = obj.GetComponent<Collider>();
+        var obj_Collider = obj.GetComponent<Collider>();
+        var obstacle_Collider, proxy;
+
         for (int i = 0; i < UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount); i++)
         {
             Vector3 position = new Vector3(UnityEngine.Random.Range(obj.transform.position.x - 0.5f, obj.transform.position.x + 0.5f),
@@ -135,17 +147,14 @@ public class NewScript : MonoBehaviour
             objects[objects.Count - 1].DeathTimestamp = DateTime.Now;
             float dist = Vector3.Distance(collision.transform.position, transform.position);
             Debug.Log("Distance to other: " + dist);
-            //Destroy(proxy_obj);
             handlePlacement();
         }
     }
 
     void handlePlacement()
     {
-        bool skip = true;
-        foreach (Transform t in objectParent)
+        foreach (Transform t in objectParent.GetComponentsInChildren(typeof(Transform)).Skip(1))
         {
-            if (skip) { skip = false; continue; }
             obstacle_trenutneKordinate.Add(t.position);
             //Debug.Log("transform position" + t.position.x); skip++;
         }
@@ -163,7 +172,6 @@ public class NewScript : MonoBehaviour
         Destroy(proxy_obj);
         obstacle_ukupnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
         obstacle_kordinatnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
-        //Debug.Log(broj_Dotaknutih_Kocaka);
 
         var clutter = new List<PAPObstacle>();
         for (int i = 0; i < obstacle_pocetneKordinate.Count; i++)
@@ -173,8 +181,7 @@ public class NewScript : MonoBehaviour
         objects[objects.Count - 1].setClutter(clutter);
         objects[objects.Count - 1].setPlaced(true);
 
-        spawnObject();
-        spawnObstacles();
+        spawnNewPlacement();
     }
 
     void obstacle_ukupnaUdaljenostOdPocPozicije(List<Vector3> poc_kord, List<Vector3> tren_kord)
