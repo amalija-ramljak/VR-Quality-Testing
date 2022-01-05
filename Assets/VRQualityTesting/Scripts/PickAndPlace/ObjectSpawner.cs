@@ -57,7 +57,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         private void spawnGoal()
         {
             this.transform.rotation = Quaternion.identity;
-            Instantiate(goalPrefab, new Vector3(goalDistance, goalHeight, 0f), Quaternion.identity, this.transform).transform;
+            Instantiate(goalPrefab, new Vector3(goalDistance, goalHeight, 0f), Quaternion.identity, this.transform);
             this.transform.Rotate(new Vector3(0f, UnityEngine.Random.Range(-goalRotationOffset, goalRotationOffset), 0f));
         }
 
