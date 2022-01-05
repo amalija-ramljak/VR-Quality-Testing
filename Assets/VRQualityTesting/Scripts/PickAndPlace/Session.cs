@@ -77,8 +77,11 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 foreach (var obj in _objects)
                 {
                     idx++;
+                    if (idx > 1)
+                    {
+                        detailedInformation.Add($"{Environment.NewLine}{Environment.NewLine}");
+                    }
                     detailedInformation.AddRange(new List<string> {
-                        Environment.NewLine, Environment.NewLine,
                         $"# Object {idx}",
                         $"Created at time: {obj.BirthTimestamp.ToString(TimestampFormat)}",
                         $"Placed at time: {obj.DeathTimestamp.ToString(TimestampFormat)}",
