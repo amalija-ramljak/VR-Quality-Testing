@@ -10,13 +10,11 @@ namespace VRQualityTesting.Scripts.Core
     /// </summary>
     public static class SessionPublisher
     {
-        private const string GeneralInformationExtension = ".txt";
-        private const string DetailedInformationExtension = ".csv";
         private const string TimestampFormat = "yyyy-MM-dd_HH-mm-ss-fff";
         private static readonly char DirectorySeparator = Path.DirectorySeparatorChar;
         private static readonly string RootSaveDirectory = Application.persistentDataPath;
 
-        public static void Publish(ISession session)
+        public static void Publish(ISession session, string GeneralInformationExtension = ".txt", string DetailedInformationExtension = ".csv")
         {
             var filePath = GetSaveFilePath(session);
             File.WriteAllLines(filePath + GeneralInformationExtension, session.GeneralInformation);

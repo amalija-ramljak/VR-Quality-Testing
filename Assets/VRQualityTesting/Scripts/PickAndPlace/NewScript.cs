@@ -181,5 +181,5 @@ public class NewScript : MonoBehaviour
         }
     }
 
-    public void PublishReport() => SessionPublisher.Publish(new Session(objects));
+    public void PublishReport() => SessionPublisher.Publish(new Session(objects), ".txt", ".txt");
 }

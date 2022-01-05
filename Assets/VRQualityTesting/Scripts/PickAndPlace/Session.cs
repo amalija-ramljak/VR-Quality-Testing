@@ -12,7 +12,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 {
     public class Session : ISession
     {
-        private const string WeaponHitsInformationHeader = "Distance to target, Distance to center, Lifetime, Size, Velocity, Offset, Hand side, Birth timestamp, Death timestamp";
         private const string TimestampFormat = "HH:mm:ss:fff";
 
         public string StudyID => Settings.GetString(MainMenuKeys.StudyID);
