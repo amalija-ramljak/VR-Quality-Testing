@@ -11,6 +11,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 {
     public class ObjectSpawner : MonoBehaviour
     {
+        #region Inspector Variables
         [SerializeField] private GameObject obj;
         [SerializeField] private GameObject squarePrefab;
         [SerializeField] private GameObject cylinderPrefab;
@@ -18,6 +19,8 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         [SerializeField] private GameObject obstaclePrefab;
         [SerializeField] private GameObject goalPrefab;
         [SerializeField] Transform objectParent;
+        #endregion
+
         private List<GameObject> ProxyList = new List<GameObject>();
         private GameObject proxy_obj;
 
@@ -27,6 +30,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
         private List<PAPObject> objects = new List<PAPObject>();
 
+        #region Settings Variables
         [HideInInspector] public float objectMinDistance { get; set; }
         [HideInInspector] public float objectMaxDistance { get; set; }
         [HideInInspector] public float objectMinHeight { get; set; }
@@ -47,6 +51,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         [HideInInspector] public float goalRotationOffset { get; set; }
         [HideInInspector] public float goalSize { get; set; }
         [HideInInspector] public float goalHeight { get; set; }
+        #endregion
 
         void Start()
         {
@@ -78,10 +83,12 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             // x distance, y height, z will be changed by rotation
             Vector3 obj_spawn_position = new Vector3(x, y, 0f);
 
-            objects.Add(new PAPObject(obj_spawn_position));
+            Shape shape = pickShape();
+
+            objects.Add(new PAPObject(obj_spawn_position, shape));
 
             // TODO: pick random shape and document it
-            proxy_obj = Instantiate(pickShape(), obj_spawn_position, Quaternion.identity, objectParent);
+            proxy_obj = Instantiate(getShapePrefabFromEnum(shape), obj_spawn_position, Quaternion.identity, objectParent);
         }
 
         private void spawnObstacles()
@@ -177,16 +184,34 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             }
         }
 
-        private GameObject pickShape()
+        public enum Shape
         {
-            var options = new List<GameObject> { };
-            if (useObjectTypeCylinder) options.Add(cylinderPrefab);
-            if (useObjectTypeSquare) options.Add(squarePrefab);
-            if (useObjectTypeSphere) options.Add(spherePrefab);
+            square,
+            sphere,
+            cylinder,
+        }
+
+        private Shape pickShape()
+        {
+            var options = new List<Shape> { };
+            if (useObjectTypeCylinder) options.Add(Shape.cylinder);
+            if (useObjectTypeSquare) options.Add(Shape.square);
+            if (useObjectTypeSphere) options.Add(Shape.sphere);
 
             if (options.Count > 1) return options[UnityEngine.Random.Range(0, options.Count)];
             else if (options.Count) return options[0];
-            else return squarePrefab;
+            else return Shape.square;
+        }
+
+        private GameObject getShapePrefabFromEnum(Shape shape)
+        {
+            switch (shape)
+            {
+                case Shape.square: return squarePrefab;
+                case Shape.cylinder: return cylinderPrefab;
+                case Shape.sphere: return spherePrefab;
+                default: return squarePrefab;
+            }
         }
 
         public void PublishReport() => SessionPublisher.Publish(new Session(objects), ".txt", ".txt");
