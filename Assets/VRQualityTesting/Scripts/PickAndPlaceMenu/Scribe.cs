@@ -63,6 +63,7 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
         {
             objectMinDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMinDistance, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
             objectMaxDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxDistance, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
+
             objectMinHeightField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMinHeight, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
             objectMaxHeightField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxHeight, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
 
@@ -75,17 +76,6 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
             useObjectTypeCylinderField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder, defaultValue: true);
             useObjectTypeSphereField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSphere, defaultValue: true);
         }
-
-        //private void InitializeGoalsSettings()
-        //{
-        //    goalMinDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.GoalMinDistance, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
-        //    goalMaxDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.GoalMaxDistance, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
-
-        //    goalMaxRotationOffsetField.text = Settings.GetFloat(PickAndPlaceKeys.GoalMaxRotationOffset, defaultValue: 180f).ToString(CultureInfo.InvariantCulture);
-
-        //    goalMinSizeField.text = Settings.GetFloat(PickAndPlaceKeys.GoalMinSize, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
-        //    goalMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.GoalMaxSize, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
-        //}
 
         private void InitializeGoalsSettings()
         {
@@ -102,8 +92,9 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
             obstacleMinDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinDistance, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
             obstacleMaxDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxDistance, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
 
-            obstacleMinCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount, defaultValue: 0).ToString(CultureInfo.InvariantCulture);
-            obstacleMaxCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount, defaultValue: 0).ToString(CultureInfo.InvariantCulture);
+            Debug.Log(Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount, defaultValue: 5).ToString(CultureInfo.InvariantCulture));
+            obstacleMinCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount, defaultValue: 5).ToString(CultureInfo.InvariantCulture);
+            obstacleMaxCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount, defaultValue: 15).ToString(CultureInfo.InvariantCulture);
 
             obstacleMinSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinSize, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
             obstacleMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxSize, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
@@ -127,6 +118,9 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
             Settings.SetFloat(PickAndPlaceKeys.ObjectMinDistance, float.Parse(objectMinDistanceField.text, CultureInfo.InvariantCulture));
             Settings.SetFloat(PickAndPlaceKeys.ObjectMaxDistance, float.Parse(objectMaxDistanceField.text, CultureInfo.InvariantCulture));
 
+            Settings.SetFloat(PickAndPlaceKeys.ObjectMinHeight, float.Parse(objectMinHeightField.text, CultureInfo.InvariantCulture));
+            Settings.SetFloat(PickAndPlaceKeys.ObjectMaxHeight, float.Parse(objectMaxHeightField.text, CultureInfo.InvariantCulture));
+
             Settings.SetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset, float.Parse(objectMaxRotationOffsetField.text, CultureInfo.InvariantCulture));
             
             Settings.SetFloat(PickAndPlaceKeys.ObjectMinSize, float.Parse(objectMinSizeField.text, CultureInfo.InvariantCulture));
@@ -136,17 +130,6 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
             Settings.SetBool(PickAndPlaceKeys.UseObjectTypeCylinder, useObjectTypeCylinderField.isOn);
             Settings.SetBool(PickAndPlaceKeys.UseObjectTypeSphere, useObjectTypeSphereField.isOn);
         }
-
-        //private void SaveGoalsSettings()
-        //{
-        //    Settings.SetFloat(PickAndPlaceKeys.GoalMinDistance, float.Parse(goalMinDistanceField.text, CultureInfo.InvariantCulture));
-        //    Settings.SetFloat(PickAndPlaceKeys.GoalMaxDistance, float.Parse(goalMaxDistanceField.text, CultureInfo.InvariantCulture));
-
-        //    Settings.SetFloat(PickAndPlaceKeys.GoalMaxRotationOffset, float.Parse(goalMaxRotationOffsetField.text, CultureInfo.InvariantCulture));
-
-        //    Settings.SetFloat(PickAndPlaceKeys.GoalMinSize, float.Parse(goalMinSizeField.text, CultureInfo.InvariantCulture));
-        //    Settings.SetFloat(PickAndPlaceKeys.GoalMaxSize, float.Parse(goalMaxSizeField.text, CultureInfo.InvariantCulture));
-        //}
 
         private void SaveGoalsSettings()
         {
@@ -162,7 +145,7 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
         {
             Settings.SetFloat(PickAndPlaceKeys.ObstacleMinDistance, float.Parse(obstacleMinDistanceField.text, CultureInfo.InvariantCulture));
             Settings.SetFloat(PickAndPlaceKeys.ObstacleMaxDistance, float.Parse(obstacleMaxDistanceField.text, CultureInfo.InvariantCulture));
-
+            
             Settings.SetInt(PickAndPlaceKeys.ObstacleMinCount, int.Parse(obstacleMinCountField.text, CultureInfo.InvariantCulture));
             Settings.SetInt(PickAndPlaceKeys.ObstacleMaxCount, int.Parse(obstacleMaxCountField.text, CultureInfo.InvariantCulture));
             

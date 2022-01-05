@@ -48,29 +48,29 @@ public class NewScript : MonoBehaviour
 
     void Awake()
     {
-        objectMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMinDistance, defaultValue: 1f);
-        objectMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxDistance, defaultValue: 2f);
-        objectMinHeight = Settings.GetFloat(PickAndPlaceKeys.ObjectMinHeight, defaultValue: 1f);
-        objectMaxHeight = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxHeight, defaultValue: 2f);
-        objectMaxRotationOffset = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset, defaultValue: 180f);
-        objectMinSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMinSize, defaultValue: 1f);
-        objectMaxSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize, defaultValue: 2f);
+        objectMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMinDistance);
+        objectMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxDistance);
+        objectMinHeight = Settings.GetFloat(PickAndPlaceKeys.ObjectMinHeight);
+        objectMaxHeight = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxHeight);
+        objectMaxRotationOffset = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset);
+        objectMinSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMinSize);
+        objectMaxSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize);
 
-        useObjectTypeSquare = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSquare, defaultValue: true);
-        useObjectTypeCylinder = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder, defaultValue: true);
-        useObjectTypeSphere = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSphere, defaultValue: true);
+        useObjectTypeSquare = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSquare);
+        useObjectTypeCylinder = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder);
+        useObjectTypeSphere = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSphere);
 
-        obstacleMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinDistance, defaultValue: 1f);
-        obstacleMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxDistance, defaultValue: 2f);
-        obstacleMinSize = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinSize, defaultValue: 1f);
-        obstacleMaxSize = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxSize, defaultValue: 2f);
-        obstacleMinCount = Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount, defaultValue: 0);
-        obstacleMaxCount = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount, defaultValue: 0);
+        obstacleMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinDistance);
+        obstacleMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxDistance);
+        obstacleMinSize = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinSize);
+        obstacleMaxSize = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxSize);
+        obstacleMinCount = Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount);
+        obstacleMaxCount = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount);
 
-        goalDistance = Settings.GetFloat(PickAndPlaceKeys.GoalDistance, defaultValue: 1f);
-        goalRotationOffset = Settings.GetFloat(PickAndPlaceKeys.GoalRotationOffset, defaultValue: 180f);
-        goalSize = Settings.GetFloat(PickAndPlaceKeys.GoalSize, defaultValue: 1f);
-        goalHeight = Settings.GetFloat(PickAndPlaceKeys.GoalHeight, defaultValue: 2f);
+        goalDistance = Settings.GetFloat(PickAndPlaceKeys.GoalDistance);
+        goalRotationOffset = Settings.GetFloat(PickAndPlaceKeys.GoalRotationOffset);
+        goalSize = Settings.GetFloat(PickAndPlaceKeys.GoalSize);
+        goalHeight = Settings.GetFloat(PickAndPlaceKeys.GoalHeight);
     }
 
 

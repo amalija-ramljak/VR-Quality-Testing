@@ -13,14 +13,6 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
         public const string ObjectMinSize = Prefix + "ObjectMinSize";
         public const string ObjectMaxSize = Prefix + "ObjectMaxSize";
 
-        //// goal for placing
-        //public const string GoalMinDistance = Prefix + "GoalMinDistance";
-        //public const string GoalMaxDistance = Prefix + "GoalMaxDistance";
-        //public const string GoalMaxRotationOffset = Prefix + "GoalMaxRotationOffset";
-        
-        //public const string GoalMinSize = Prefix + "GoalMinSize";
-        //public const string GoalMaxSize = Prefix + "GoalMaxSize";
-
         // goal for placing
         public const string GoalDistance = Prefix + "GoalDistance";
         public const string GoalRotationOffset = Prefix + "GoalRotationOffset";
