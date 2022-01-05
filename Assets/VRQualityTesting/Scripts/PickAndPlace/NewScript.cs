@@ -22,7 +22,7 @@ public class NewScript : MonoBehaviour
     private List<Vector3> obstacle_trenutneKordinate = new List<Vector3>();
     int broj_Dotaknutih_Kocaka = 0;
 
-    private List<PAPObject> objects;
+    private List<PAPObject> objects = new List<PAPObject>();
 
     int global = 0;
 
@@ -30,7 +30,8 @@ public class NewScript : MonoBehaviour
     {
         Vector3 obj_spawn_position = new Vector3(UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f));
 
-        objects.Add(new PAPObject(obj_spawn_position));
+        var newObj = new PAPObject(obj_spawn_position);
+        objects.Add(newObj);
         //obj.transform.position.x = UnityEngine.Random.Range(0f, 10f);
         //obj.transform.position.y = UnityEngine.Random.Range(0f, 10f);
         //obj.transform.position.z = UnityEngine.Random.Range(0f, 10f);
