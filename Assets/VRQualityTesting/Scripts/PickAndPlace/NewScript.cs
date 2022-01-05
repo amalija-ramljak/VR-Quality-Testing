@@ -107,7 +107,8 @@ public class NewScript : MonoBehaviour
     {
         var clutter = new List<PAPObstacle>();
         var obj_Collider = obj.GetComponent<Collider>();
-        var obstacle_Collider, proxy;
+        Collider obstacle_Collider;
+        GameObject proxy;
 
         for (int i = 0; i < UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount); i++)
         {
