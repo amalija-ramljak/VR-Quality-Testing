@@ -39,8 +39,8 @@ public class NewScript : MonoBehaviour
     private float obstacleMaxDistance;
     private float obstacleMinSize;
     private float obstacleMaxSize;
-    private float obstacleMinCount;
-    private float obstacleMaxCount;
+    private int obstacleMinCount;
+    private int obstacleMaxCount;
     private float goalDistance;
     private float goalRotationOffset;
     private float goalSize;
@@ -97,44 +97,43 @@ public class NewScript : MonoBehaviour
         Vector3 obj_spawn_position = new Vector3(x, UnityEngine.Random.Range(objectMinHeight, objectMaxHeight), 0f);
 
         objects.Add(new PAPObject(obj_spawn_position));
-        proxy_obj = Instantiate(obj, obj_spawn_position, Quaternion.identity, objectParent);
+
+        // TODO: pick random shape and document it
+        proxy_obj = Instantiate(spherePrefab, obj_spawn_position, Quaternion.identity, objectParent);
     }
 
     public void spawnObstacles()
     {
         var clutter = new List<PAPObstacle>();
-        var obj_Collider = obj.GetComponent<Collider>();
+        var obj_Collider = proxy_obj.GetComponent<Collider>();
         Collider obstacle_Collider;
-        GameObject proxy;
+        GameObject proxy = null;
+        Vector3 position;
 
-        for (int i = 0; i < UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount); i++)
+        bool newLoop = true;
+        int randObstacleCount = UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount + 1);
+        for (int i = 0; i < randObstacleCount; i++)
         {
-            Vector3 position = new Vector3(UnityEngine.Random.Range(obj.transform.position.x - 0.5f, obj.transform.position.x + 0.5f),
-                                            UnityEngine.Random.Range(obj.transform.position.y - 0.5f, obj.transform.position.y + 0.5f),
-                                            UnityEngine.Random.Range(obj.transform.position.z - 0.5f, obj.transform.position.z + 0.5f));
-            obstacle_pocetneKordinate.Add(position);
-
-            proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
-            ProxyList.Add(proxy);
-            obstacle_Collider = proxy.GetComponent<Collider>();
-
-            while (obstacle_Collider.bounds.Intersects(obj_Collider.bounds))
+            newLoop = true;
+            do
             {
-                obstacle_pocetneKordinate.RemoveAt(obstacle_pocetneKordinate.Count - 1);
-                Vector3 backup_position = new Vector3(UnityEngine.Random.Range(obj.transform.position.x - 5f, obj.transform.position.x + 5f),
-                                                       UnityEngine.Random.Range(obj.transform.position.y - 5f, obj.transform.position.y + 5f),
-                                                       UnityEngine.Random.Range(obj.transform.position.z - 5f, obj.transform.position.z + 5f));
-                obstacle_pocetneKordinate.Add(backup_position);
+                if (!newLoop) Destroy(proxy); 
+                newLoop = false;
+                do
+                {
+                    position = proxy_obj.transform.position + UnityEngine.Random.insideUnitSphere * UnityEngine.Random.Range(obstacleMinDistance, obstacleMaxDistance);
+                } while (Vector3.Distance(position, proxy_obj.transform.position) < obstacleMinDistance);
 
-                Destroy(proxy);
-                proxy = Instantiate(obstaclePrefab, backup_position, Quaternion.identity, objectParent);
-                ProxyList.Add(proxy);
-
+                proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
                 obstacle_Collider = proxy.GetComponent<Collider>();
-            }
+            } while (obstacle_Collider.bounds.Intersects(obj_Collider.bounds));
+
+            obstacle_pocetneKordinate.Add(position);
+            ProxyList.Add(proxy);
 
             clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_pocetneKordinate[i]));
         }
+        
         objects[objects.Count - 1].setClutter(clutter);
     }
 

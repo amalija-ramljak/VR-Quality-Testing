@@ -92,7 +92,6 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
             obstacleMinDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinDistance, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
             obstacleMaxDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxDistance, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
 
-            Debug.Log(Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount, defaultValue: 5).ToString(CultureInfo.InvariantCulture));
             obstacleMinCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount, defaultValue: 5).ToString(CultureInfo.InvariantCulture);
             obstacleMaxCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount, defaultValue: 15).ToString(CultureInfo.InvariantCulture);
 
