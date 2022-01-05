@@ -92,14 +92,11 @@ public class NewScript : MonoBehaviour
         // distance
         float x = UnityEngine.Random.Range(objectMinDistance, objectMaxDistance);
 
-        // x distance, y height, z should be automatic with rotation
+        // x distance, y height, z should be automatic with rotation later
         // TODO: test z/rotation
         Vector3 obj_spawn_position = new Vector3(x, UnityEngine.Random.Range(objectMinHeight, objectMaxHeight), 0f);
 
         objects.Add(new PAPObject(obj_spawn_position));
-        //obj.transform.position.x = UnityEngine.Random.Range(0f, 10f);
-        //obj.transform.position.y = UnityEngine.Random.Range(0f, 10f);
-        //obj.transform.position.z = UnityEngine.Random.Range(0f, 10f);
         proxy_obj = Instantiate(obj, obj_spawn_position, Quaternion.identity, objectParent);
     }
 
