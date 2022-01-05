@@ -134,12 +134,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
             for (int element = 0; element < ProxyList.Count; element++)
             {
-                //obstacle_trenutneKordinate.Add(obstacle_pocetneKordinate[obstacle_p ocetneKordinate.Count-numberOfObstacles]);
-                //obstacle_trenutneKordinate.Add(ProxyList[element].transform.position);
-                //obstacle_trenutneKordinate.Add(GameObject.Find("obstacle(Clone)").transform.position);
-                //Debug.Log("transform position" + GameObject.Find("obstacle(Clone)").transform.position.x);
-                //Debug.Log("transform position" + ProxyList[element].transform.position.x); ne radi
-
                 Destroy(ProxyList[element]);
             }
 
