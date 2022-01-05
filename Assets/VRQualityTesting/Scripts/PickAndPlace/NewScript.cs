@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using VRQualityTesting.Scripts.Core;
 using VRQualityTesting.Scripts.PickAndPlace;
+using VRQualityTesting.Scripts.PickAndPlaceMenu;
+using VRQualityTesting.Scripts.Utility;
 
 public class NewScript : MonoBehaviour
 {
     [SerializeField] private GameObject obj;
-    //[SerializeField] private GameObject obj2;
-    [SerializeField] private GameObject obstacleToBeSpawned;
-    [SerializeField] int numberOfObstacles;
-    [SerializeField] Transform parent;
+    [SerializeField] private GameObject squarePrefab;
+    [SerializeField] private GameObject cylinderPrefab;
+    [SerializeField] private GameObject spherePrefab;
+    [SerializeField] private GameObject obstaclePrefab;
+    [SerializeField] Transform objectParent;
     private GameObject proxy;
     private List<GameObject> ProxyList = new List<GameObject>();
     private GameObject proxy_obj;
@@ -24,56 +27,100 @@ public class NewScript : MonoBehaviour
 
     private List<PAPObject> objects = new List<PAPObject>();
 
-    int global = 0;
+    private float objectMinDistance;
+    private float objectMaxDistance;
+    private float objectMaxRotationOffset;
+    private float objectMinSize;
+    private float objectMaxSize;
+    private bool useObjectTypeSquare;
+    private bool useObjectTypeCylinder;
+    private bool useObjectTypeSphere;
+    private float obstacleMinDistance;
+    private float obstacleMaxDistance;
+    private float obstacleMinSize;
+    private float obstacleMaxSize;
+    private float obstacleMinCount;
+    private float obstacleMaxCount;
+    private float goalDistance;
+    private float goalRotationOffset;
+    private float goalSize;
+    private float goalHeight;
+
+    void Awake()
+    {
+        objectMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMinDistance, defaultValue: 1f);
+        objectMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxDistance, defaultValue: 2f);
+        objectMaxRotationOffset = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset, defaultValue: 180f);
+        objectMinSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMinSize, defaultValue: 1f);
+        objectMaxSize = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize, defaultValue: 2f);
+
+        useObjectTypeSquare = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSquare, defaultValue: true);
+        useObjectTypeCylinder = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder, defaultValue: true);
+        useObjectTypeSphere = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSphere, defaultValue: true);
+
+        obstacleMinDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinDistance, defaultValue: 1f);
+        obstacleMaxDistance = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxDistance, defaultValue: 2f);
+        obstacleMinSize = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinSize, defaultValue: 1f);
+        obstacleMaxSize = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxSize, defaultValue: 2f);
+        obstacleMinCount = Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount, defaultValue: 0);
+        obstacleMaxCount = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount, defaultValue: 0);
+
+        goalDistance = Settings.GetFloat(PickAndPlaceKeys.GoalDistance, defaultValue: 1f);
+        goalRotationOffset = Settings.GetFloat(PickAndPlaceKeys.GoalRotationOffset, defaultValue: 180f);
+        goalSize = Settings.GetFloat(PickAndPlaceKeys.GoalSize, defaultValue: 1f);
+        goalHeight = Settings.GetFloat(PickAndPlaceKeys.GoalHeight, defaultValue: 2f);
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        spawnObject();
+        spawnObstacles();
+    }
 
     public void spawnObject()
     {
+        // distance - x
+        float x = UnityEngine.Random.Range(objectMinDistance, objectMaxDistance);
+
         Vector3 obj_spawn_position = new Vector3(UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f));
 
-        var newObj = new PAPObject(obj_spawn_position);
-        objects.Add(newObj);
+        objects.Add(new PAPObject(obj_spawn_position));
         //obj.transform.position.x = UnityEngine.Random.Range(0f, 10f);
         //obj.transform.position.y = UnityEngine.Random.Range(0f, 10f);
         //obj.transform.position.z = UnityEngine.Random.Range(0f, 10f);
-        proxy_obj = Instantiate(obj, obj_spawn_position, Quaternion.identity, parent);
+        proxy_obj = Instantiate(obj, obj_spawn_position, Quaternion.identity, objectParent);
     }
 
     public void spawnObstacles()
     {
         var clutter = new List<PAPObstacle>();
         obj_Collider = obj.GetComponent<Collider>();
-        for (int i = 0; i < numberOfObstacles; i++)
+        for (int i = 0; i < UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount); i++)
         {
             Vector3 position = new Vector3(UnityEngine.Random.Range(obj.transform.position.x - 0.5f, obj.transform.position.x + 0.5f),
                                             UnityEngine.Random.Range(obj.transform.position.y - 0.5f, obj.transform.position.y + 0.5f),
                                             UnityEngine.Random.Range(obj.transform.position.z - 0.5f, obj.transform.position.z + 0.5f));
             obstacle_pocetneKordinate.Add(position);
 
-            proxy = Instantiate(obstacleToBeSpawned, position, Quaternion.identity, parent);
+            proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
             ProxyList.Add(proxy);
             obstacle_Collider = proxy.GetComponent<Collider>();
 
-            while (true)
+            while (obstacle_Collider.bounds.Intersects(obj_Collider.bounds))
             {
+                obstacle_pocetneKordinate.RemoveAt(obstacle_pocetneKordinate.Count - 1);
+                Vector3 backup_position = new Vector3(UnityEngine.Random.Range(obj.transform.position.x - 5f, obj.transform.position.x + 5f),
+                                                       UnityEngine.Random.Range(obj.transform.position.y - 5f, obj.transform.position.y + 5f),
+                                                       UnityEngine.Random.Range(obj.transform.position.z - 5f, obj.transform.position.z + 5f));
+                obstacle_pocetneKordinate.Add(backup_position);
 
-                if (obstacle_Collider.bounds.Intersects(obj_Collider.bounds))
-                {
-                    obstacle_pocetneKordinate.RemoveAt(obstacle_pocetneKordinate.Count - 1);
-                    Vector3 backup_position = new Vector3(UnityEngine.Random.Range(obj.transform.position.x - 5f, obj.transform.position.x + 5f),
-                                                           UnityEngine.Random.Range(obj.transform.position.y - 5f, obj.transform.position.y + 5f),
-                                                           UnityEngine.Random.Range(obj.transform.position.z - 5f, obj.transform.position.z + 5f));
-                    obstacle_pocetneKordinate.Add(backup_position);
+                Destroy(proxy);
+                proxy = Instantiate(obstaclePrefab, backup_position, Quaternion.identity, objectParent);
+                ProxyList.Add(proxy);
 
-                    Destroy(proxy);
-                    proxy = Instantiate(obstacleToBeSpawned, backup_position, Quaternion.identity, parent);
-                    ProxyList.Add(proxy);
-
-                    obstacle_Collider = proxy.GetComponent<Collider>();
-                }
-                else
-                {
-                    break;
-                }
+                obstacle_Collider = proxy.GetComponent<Collider>();
             }
 
             clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_pocetneKordinate[i]));
@@ -81,81 +128,54 @@ public class NewScript : MonoBehaviour
         objects[objects.Count - 1].setClutter(clutter);
     }
 
-    void Awake()
-    {
-        spawnObject();
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        spawnObstacles();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (global == 1)
-        {
-            var childrenTransforms = parent.GetComponentInChildren<Transform>();
-            int skip = 0;
-            foreach (Transform t in childrenTransforms)
-            {
-                if (skip == 0) { skip++; continue; }
-                obstacle_trenutneKordinate.Add(t.position);
-                //Debug.Log("transform position" + t.position.x); skip++;
-            }
-
-            for (int element = 0; element < ProxyList.Count; element++)
-            {
-                //obstacle_trenutneKordinate.Add(obstacle_pocetneKordinate[obstacle_p ocetneKordinate.Count-numberOfObstacles]);
-                //obstacle_trenutneKordinate.Add(ProxyList[element].transform.position);
-                //obstacle_trenutneKordinate.Add(GameObject.Find("obstacle(Clone)").transform.position);
-                //Debug.Log("transform position" + GameObject.Find("obstacle(Clone)").transform.position.x);
-                //Debug.Log("transform position" + ProxyList[element].transform.position.x); ne radi
-
-                Destroy(ProxyList[element]);
-            }
-            Destroy(proxy_obj);
-            obstacle_ukupnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
-            obstacle_kordinatnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
-            //Debug.Log(broj_Dotaknutih_Kocaka);
-
-            var clutter = new List<PAPObstacle>();
-            for (int i = 0; i < obstacle_pocetneKordinate.Count; i++)
-            {
-                clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_trenutneKordinate[i]));
-            }
-            objects[objects.Count - 1].setClutter(clutter);
-            objects[objects.Count - 1].setPlaced(true);
-
-            spawnObject();
-            spawnObstacles();
-            global = 0;
-        }
-    }
-
     void OnCollisionEnter(Collision collision)
     {
-        if (obj)
+        if (obj) // huh?
         {
             objects[objects.Count - 1].DeathTimestamp = DateTime.Now;
-            Debug.Log("ISPIS");
             float dist = Vector3.Distance(collision.transform.position, transform.position);
-            print("Distance to other: " + dist);
+            Debug.Log("Distance to other: " + dist);
             //Destroy(proxy_obj);
-            global = 1;
+            handlePlacement();
         }
     }
 
-    /* void OnCollisionExit(Collision collision) {
-        if (other)
+    void handlePlacement()
+    {
+        bool skip = true;
+        foreach (Transform t in objectParent)
         {
-            float dist = Vector3.Distance(other.position, transform.position);
-            print("Ćao");
+            if (skip) { skip = false; continue; }
+            obstacle_trenutneKordinate.Add(t.position);
+            //Debug.Log("transform position" + t.position.x); skip++;
         }
-    } */
+
+        for (int element = 0; element < ProxyList.Count; element++)
+        {
+            //obstacle_trenutneKordinate.Add(obstacle_pocetneKordinate[obstacle_p ocetneKordinate.Count-numberOfObstacles]);
+            //obstacle_trenutneKordinate.Add(ProxyList[element].transform.position);
+            //obstacle_trenutneKordinate.Add(GameObject.Find("obstacle(Clone)").transform.position);
+            //Debug.Log("transform position" + GameObject.Find("obstacle(Clone)").transform.position.x);
+            //Debug.Log("transform position" + ProxyList[element].transform.position.x); ne radi
+
+            Destroy(ProxyList[element]);
+        }
+        Destroy(proxy_obj);
+        obstacle_ukupnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
+        obstacle_kordinatnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
+        //Debug.Log(broj_Dotaknutih_Kocaka);
+
+        var clutter = new List<PAPObstacle>();
+        for (int i = 0; i < obstacle_pocetneKordinate.Count; i++)
+        {
+            clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_trenutneKordinate[i]));
+        }
+        objects[objects.Count - 1].setClutter(clutter);
+        objects[objects.Count - 1].setPlaced(true);
+
+        spawnObject();
+        spawnObstacles();
+    }
 
     void obstacle_ukupnaUdaljenostOdPocPozicije(List<Vector3> poc_kord, List<Vector3> tren_kord)
     {
