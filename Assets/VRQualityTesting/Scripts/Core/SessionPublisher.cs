@@ -17,8 +17,8 @@ namespace VRQualityTesting.Scripts.Core
         public static void Publish(ISession session, string GeneralInformationExtension = ".txt", string DetailedInformationExtension = ".csv")
         {
             var filePath = GetSaveFilePath(session);
-            File.WriteAllLines(filePath + GeneralInformationExtension, session.GeneralInformation);
-            File.WriteAllLines(filePath + DetailedInformationExtension, session.DetailedInformation);
+            File.WriteAllLines(filePath + "_general" + GeneralInformationExtension, session.GeneralInformation);
+            File.WriteAllLines(filePath + "_details" + DetailedInformationExtension, session.DetailedInformation);
         }
 
         private static string GetSaveFilePath(ISession session)
