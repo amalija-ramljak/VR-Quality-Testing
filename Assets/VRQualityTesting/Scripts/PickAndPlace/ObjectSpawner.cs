@@ -183,26 +183,26 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             }
         }
 
-        public static enum Shape
+        public enum Shape
         {
             square,
             sphere,
             cylinder,
         }
 
-        private ObjectSpawner.Shape pickShape()
+        private Shape pickShape()
         {
             var options = new List<Shape> { };
-            if (useObjectTypeCylinder) options.Add(ObjectSpawner.Shape.cylinder);
-            if (useObjectTypeSquare) options.Add(ObjectSpawner.Shape.square);
-            if (useObjectTypeSphere) options.Add(ObjectSpawner.Shape.sphere);
+            if (useObjectTypeCylinder) options.Add(Shape.cylinder);
+            if (useObjectTypeSquare) options.Add(Shape.square);
+            if (useObjectTypeSphere) options.Add(Shape.sphere);
 
             if (options.Count > 1) return options[UnityEngine.Random.Range(0, options.Count)];
-            else if (options.Count) return options[0];
+            else if (options.Count == 1) return options[0];
             else return Shape.square;
         }
 
-        private GameObject getShapePrefabFromEnum(ObjectSpawner.Shape shape)
+        private GameObject getShapePrefabFromEnum(Shape shape)
         {
             switch (shape)
             {
