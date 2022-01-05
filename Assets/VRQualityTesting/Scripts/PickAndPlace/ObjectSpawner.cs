@@ -81,7 +81,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             objects.Add(new PAPObject(obj_spawn_position));
 
             // TODO: pick random shape and document it
-            proxy_obj = Instantiate(spherePrefab, obj_spawn_position, Quaternion.identity, objectParent);
+            proxy_obj = Instantiate(pickShape(), obj_spawn_position, Quaternion.identity, objectParent);
         }
 
         private void spawnObstacles()
@@ -181,6 +181,18 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 //Debug.Log("ZZZ" + z);
                 if (x != 0 || y != 0 || z != 0) { broj_Dotaknutih_Kocaka++; }
             }
+        }
+
+        private GameObject pickShape()
+        {
+            var options = new List<GameObject> { };
+            if (useObjectTypeCylinder) options.Add(cylinderPrefab);
+            if (useObjectTypeSquare) options.Add(squarePrefab);
+            if (useObjectTypeSphere) options.Add(spherePrefab);
+
+            if (options.Count > 1) return options[UnityEngine.Random.Range(0, options.Count)];
+            else if (options.Count) return options[0];
+            else return squarePrefab;
         }
 
         public void PublishReport() => SessionPublisher.Publish(new Session(objects), ".txt", ".txt");
