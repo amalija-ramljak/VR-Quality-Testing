@@ -1,142 +1,188 @@
+using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using VRQualityTesting.Scripts.Core;
+using VRQualityTesting.Scripts.PickAndPlaceMenu;
+using VRQualityTesting.Scripts.Utility;
 
 namespace VRQualityTesting.Scripts.PickAndPlace
 {
     public class ObjectSpawner : MonoBehaviour
     {
-        public float ObjectMinDistance { get; set; }
-        public float ObjectMaxDistance { get; set; }
-        public float ObjectMaxRotationOffset { get; set; }
-        public float ObjectMinSize { get; set; }
-        public float ObjectMaxSize { get; set; }
-        public float ObjectMinAngleHeight { get; set; }
-        public float ObjectMaxAngleHeight { get; set; }
-
-        public float GoalDistance { get; set; }
-        public float GoalRotationOffset { get; set; }
-        public float GoalSize { get; set; }
-        public float GoalHeight { get; set; }
-
-        //public float GoalMinDistance { get; set; }
-        //public float GoalMaxDistance { get; set; }
-        //public float GoalMaxRotationOffset { get; set; }
-        //public float GoalMinSize { get; set; }
-        //public float GoalMaxSize { get; set; }
-        //public float GoalMinAngleHeight { get; set; }
-        //public float GoalMaxAngleHeight { get; set; }
-
-        public float ObstacleMinDistance { get; set; }
-        public float ObstacleMaxDistance { get; set; }
-        public int ObstacleMinCount { get; set; }
-        public int ObstacleMaxCount { get; set; }
-        public float ObstacleMinSize { get; set; }
-        public float ObstacleMaxSize { get; set; }
-
-        public bool UseObjectTypeSquare { get; set; }
-        public bool UseObjectTypeCylinder { get; set; }
-        public bool UseObjectTypeSphere { get; set; }
-
-        [SerializeField] private GameObject objectSquarePrefab;
-        [SerializeField] private GameObject objectCylinderPrefab;
-        [SerializeField] private GameObject objectSpherePrefab;
+        [SerializeField] private GameObject obj;
+        [SerializeField] private GameObject squarePrefab;
+        [SerializeField] private GameObject cylinderPrefab;
+        [SerializeField] private GameObject spherePrefab;
         [SerializeField] private GameObject obstaclePrefab;
         [SerializeField] private GameObject goalPrefab;
-        private float _currentDuration;
+        [SerializeField] Transform objectParent;
+        private List<GameObject> ProxyList = new List<GameObject>();
+        private GameObject proxy_obj;
 
-        private bool flag = false;
+        private List<Vector3> obstacle_pocetneKordinate = new List<Vector3>();
+        private List<Vector3> obstacle_trenutneKordinate = new List<Vector3>();
+        int broj_Dotaknutih_Kocaka = 0;
 
-        private void Start()
+        private List<PAPObject> objects = new List<PAPObject>();
+
+        [HideInInspector] public float objectMinDistance { get; set; }
+        [HideInInspector] public float objectMaxDistance { get; set; }
+        [HideInInspector] public float objectMinHeight { get; set; }
+        [HideInInspector] public float objectMaxHeight { get; set; }
+        [HideInInspector] public float objectMaxRotationOffset { get; set; }
+        [HideInInspector] public float objectMinSize { get; set; }
+        [HideInInspector] public float objectMaxSize { get; set; }
+        [HideInInspector] public bool useObjectTypeSquare { get; set; }
+        [HideInInspector] public bool useObjectTypeCylinder { get; set; }
+        [HideInInspector] public bool useObjectTypeSphere { get; set; }
+        [HideInInspector] public float obstacleMinDistance { get; set; }
+        [HideInInspector] public float obstacleMaxDistance { get; set; }
+        [HideInInspector] public float obstacleMinSize { get; set; }
+        [HideInInspector] public float obstacleMaxSize { get; set; }
+        [HideInInspector] public int obstacleMinCount { get; set; }
+        [HideInInspector] public int obstacleMaxCount { get; set; }
+        [HideInInspector] public float goalDistance { get; set; }
+        [HideInInspector] public float goalRotationOffset { get; set; }
+        [HideInInspector] public float goalSize { get; set; }
+        [HideInInspector] public float goalHeight { get; set; }
+
+        void Start()
         {
-            SpawnObject();
-            SpawnGoal();
+            spawnGoal();
+            spawnNewPlacement();
         }
 
-        public void OnTargetHit()
+        private void spawnGoal()
         {
-            flag = false;
+            Debug.Log(this.transform.root);
+            var goalObj = Instantiate(goalPrefab, new Vector3(goalDistance, goalHeight, 0f), Quaternion.identity, this.transform.root).transform;
+            goalObj.Rotate(new Vector3(0f, UnityEngine.Random.Range(-goalRotationOffset, goalRotationOffset), 0f));
         }
 
-        private void Update()
+        private void spawnNewPlacement()
         {
-            if (flag == false)
+            objectParent.rotation = Quaternion.identity;
+            spawnObject();
+            spawnObstacles();
+            objectParent.Rotate(new Vector3(0f, UnityEngine.Random.Range(-objectMaxRotationOffset, objectMaxRotationOffset), 0f));
+        }
+
+        private void spawnObject()
+        {
+            // distance
+            float x = UnityEngine.Random.Range(objectMinDistance, objectMaxDistance);
+            float y = UnityEngine.Random.Range(objectMinHeight, objectMaxHeight);
+
+            // x distance, y height, z will be changed by rotation
+            Vector3 obj_spawn_position = new Vector3(x, y, 0f);
+
+            objects.Add(new PAPObject(obj_spawn_position));
+
+            // TODO: pick random shape and document it
+            proxy_obj = Instantiate(spherePrefab, obj_spawn_position, Quaternion.identity, objectParent);
+        }
+
+        private void spawnObstacles()
+        {
+            var clutter = new List<PAPObstacle>();
+            var obj_Collider = proxy_obj.GetComponent<Collider>();
+            Collider obstacle_Collider;
+            GameObject proxy = null;
+            Vector3 position;
+            float randObstacleSize;
+
+            bool newLoop;
+            int randObstacleCount = UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount + 1);
+            for (int i = 0; i < randObstacleCount; i++)
             {
-                SpawnObject();
+                newLoop = true;
+                do
+                {
+                    if (!newLoop) Destroy(proxy);
+                    newLoop = false;
+                    do
+                    {
+                        position = proxy_obj.transform.position + UnityEngine.Random.insideUnitSphere * UnityEngine.Random.Range(obstacleMinDistance, obstacleMaxDistance);
+                    } while (Vector3.Distance(position, proxy_obj.transform.position) < obstacleMinDistance);
+
+                    proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
+                    obstacle_Collider = proxy.GetComponent<Collider>();
+                } while (obstacle_Collider.bounds.Intersects(obj_Collider.bounds));
+
+                randObstacleSize = UnityEngine.Random.Range(obstacleMinSize, obstacleMaxSize);
+                proxy.transform.localScale = new Vector3(randObstacleSize, randObstacleSize, randObstacleSize);
+
+                obstacle_pocetneKordinate.Add(position);
+                ProxyList.Add(proxy);
+
+                clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_pocetneKordinate[i]));
+            }
+
+            objects[objects.Count - 1].setClutter(clutter);
+        }
+
+        public void handlePlacement()
+        {
+            objects[objects.Count - 1].DeathTimestamp = DateTime.Now;
+
+            foreach (Transform t in objectParent.GetComponentsInChildren(typeof(Transform)).Skip(1))
+            {
+                obstacle_trenutneKordinate.Add(t.position);
+            }
+
+            for (int element = 0; element < ProxyList.Count; element++)
+            {
+                //obstacle_trenutneKordinate.Add(obstacle_pocetneKordinate[obstacle_p ocetneKordinate.Count-numberOfObstacles]);
+                //obstacle_trenutneKordinate.Add(ProxyList[element].transform.position);
+                //obstacle_trenutneKordinate.Add(GameObject.Find("obstacle(Clone)").transform.position);
+                //Debug.Log("transform position" + GameObject.Find("obstacle(Clone)").transform.position.x);
+                //Debug.Log("transform position" + ProxyList[element].transform.position.x); ne radi
+
+                Destroy(ProxyList[element]);
+            }
+
+            Destroy(proxy_obj);
+            obstacle_ukupnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
+            obstacle_kordinatnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
+
+            var clutter = new List<PAPObstacle>();
+            for (int i = 0; i < obstacle_pocetneKordinate.Count; i++)
+            {
+                clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_trenutneKordinate[i]));
+            }
+            objects[objects.Count - 1].setClutter(clutter);
+            objects[objects.Count - 1].setPlaced(true);
+
+            spawnNewPlacement();
+        }
+
+        private void obstacle_ukupnaUdaljenostOdPocPozicije(List<Vector3> poc_kord, List<Vector3> tren_kord)
+        {
+            broj_Dotaknutih_Kocaka = 0;
+            for (int i = 0; i < poc_kord.Count; i++)
+            {
+                float dist = Vector3.Distance(poc_kord[i], tren_kord[i]);
+                //Debug.Log("OBS UDALJENOST" + dist);
+                if (dist != 0) { broj_Dotaknutih_Kocaka++; }
+            }
+        }
+        private void obstacle_kordinatnaUdaljenostOdPocPozicije(List<Vector3> poc_kord, List<Vector3> tren_kord)
+        {
+            broj_Dotaknutih_Kocaka = 0;
+            for (int i = 0; i < poc_kord.Count; i++)
+            {
+                float x = poc_kord[i].x - tren_kord[i].x;
+                //Debug.Log("XXX" + x);
+                float y = poc_kord[i].y - tren_kord[i].y;
+                //Debug.Log("YYY" + y);
+                float z = poc_kord[i].z - tren_kord[i].z;
+                //Debug.Log("ZZZ" + z);
+                if (x != 0 || y != 0 || z != 0) { broj_Dotaknutih_Kocaka++; }
             }
         }
 
-        private void SpawnObject()
-        {
-            flag = true;
-
-            var objectPrefab = Instantiate(objectSquarePrefab, GetRandomObjectPosition(), Quaternion.identity);
-            objectPrefab.transform.localScale = GetRandomObjectSize();
-            objectPrefab.transform.LookAt(2 * objectPrefab.transform.position);
-        }
-
-
-        private void SpawnGoal()
-        {
-            var goal = Instantiate(goalPrefab, GetGoalPosition(), Quaternion.identity);
-            goal.transform.localScale = GetGoalSize();
-        }
-
-        private Vector3 GetRandomObjectPosition()
-        {
-            var radius = Random.Range(ObjectMinDistance, ObjectMaxDistance);
-
-            var angleOffset = ObjectMaxRotationOffset * Mathf.Deg2Rad;
-            var angle = Random.Range(-angleOffset, +angleOffset);
-
-            var x = radius * Mathf.Cos(angle);
-            //var y = Random.Range(ObjectMinAngleHeight, ObjectMaxAngleHeight);
-            var y = Random.Range(0, 5);
-            var z = radius * Mathf.Sin(angle);
-
-            return new Vector3(x, y, z);
-        }
-
-        private Vector3 GetRandomObjectSize()
-        {
-            var size = Random.Range(ObjectMinSize, ObjectMaxSize);
-            return new Vector3(size, size, size);
-        }
-
-        //private Vector3 GetRandomGoalPosition()
-        //{
-        //    var radius = Random.Range(GoalMinDistance, GoalMaxDistance);
-
-        //    var angleOffset = GoalMaxRotationOffset * Mathf.Deg2Rad;
-        //    var angle = Random.Range(-angleOffset, +angleOffset);
-
-        //    var x = radius * Mathf.Cos(angle);
-        //    //var y = Random.Range(GoalMinAngleHeight, GoalMaxAngleHeight);
-        //    var y = Random.Range(2, 5);
-        //    var z = radius * Mathf.Sin(angle);
-
-        //    return new Vector3(x, y, z);
-        //}
-
-        //private Vector3 GetRandomGoalSize()
-        //{
-        //    var size = Random.Range(GoalMinSize, GoalMaxSize);
-        //    return new Vector3(size, 0.5f, size);
-        //}
-
-        private Vector3 GetGoalPosition()
-        {
-            var angleOffset = GoalRotationOffset * Mathf.Deg2Rad;
-
-            var x = GoalDistance * Mathf.Cos(angleOffset);
-            var y = GoalHeight;
-            var z = GoalDistance * Mathf.Sin(angleOffset);
-
-            return new Vector3(x, y, z);
-        }
-
-        private Vector3 GetGoalSize()
-        {
-            return new Vector3(GoalSize, 1, GoalSize);
-        }
+        public void PublishReport() => SessionPublisher.Publish(new Session(objects), ".txt", ".txt");
     }
 }
