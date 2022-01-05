@@ -87,7 +87,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
             objects.Add(new PAPObject(obj_spawn_position, shape));
 
-            // TODO: pick random shape and document it
             proxy_obj = Instantiate(getShapePrefabFromEnum(shape), obj_spawn_position, Quaternion.identity, objectParent);
         }
 
