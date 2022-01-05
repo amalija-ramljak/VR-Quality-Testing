@@ -83,7 +83,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             // x distance, y height, z will be changed by rotation
             Vector3 obj_spawn_position = new Vector3(x, y, 0f);
 
-            Shape shape = pickShape();
+            var shape = pickShape();
 
             objects.Add(new PAPObject(obj_spawn_position, shape));
 
@@ -184,26 +184,26 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             }
         }
 
-        public enum Shape
+        public static enum Shape
         {
             square,
             sphere,
             cylinder,
         }
 
-        private Shape pickShape()
+        private ObjectSpawner.Shape pickShape()
         {
             var options = new List<Shape> { };
-            if (useObjectTypeCylinder) options.Add(Shape.cylinder);
-            if (useObjectTypeSquare) options.Add(Shape.square);
-            if (useObjectTypeSphere) options.Add(Shape.sphere);
+            if (useObjectTypeCylinder) options.Add(ObjectSpawner.Shape.cylinder);
+            if (useObjectTypeSquare) options.Add(ObjectSpawner.Shape.square);
+            if (useObjectTypeSphere) options.Add(ObjectSpawner.Shape.sphere);
 
             if (options.Count > 1) return options[UnityEngine.Random.Range(0, options.Count)];
             else if (options.Count) return options[0];
             else return Shape.square;
         }
 
-        private GameObject getShapePrefabFromEnum(Shape shape)
+        private GameObject getShapePrefabFromEnum(ObjectSpawner.Shape shape)
         {
             switch (shape)
             {

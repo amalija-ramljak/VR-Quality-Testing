@@ -32,10 +32,14 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 int objSpawned = _objects.Count;
                 int objPlaced = _objects.Count(obj => obj.isPlaced);
 
+                int objSquareCount = _objects.Count(obj => obj.shape == ObjectSpawner.Shape.square);
+                int objCylinderCount = _objects.Count(obj => obj.shape == ObjectSpawner.Shape.cylinder);
+                int objSphereCount = _objects.Count(obj => obj.shape == ObjectSpawner.Shape.sphere);
+
                 return new List<string>
                 {
                     "# Round results",
-                    $"Objects spawned: {objSpawned}",
+                    $"Objects spawned: {objSpawned} ({objSquareCount} square, {objCylinderCount} cylinder, {objSphereCount} sphere)",
                     "",
                     $"Objects placed: {objPlaced}",
                     "",
@@ -84,7 +88,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                         detailedInformation.Add($"{Environment.NewLine}{Environment.NewLine}");
                     }
                     detailedInformation.AddRange(new List<string> {
-                        $"# Object {idx}",
+                        $"# Object {idx} ({obj.shape.ToString()})",
                         $"Created at time: {obj.BirthTimestamp.ToString(TimestampFormat)}",
                         $"Placed at time: {obj.DeathTimestamp.ToString(TimestampFormat)}",
                         $"Clutter data ({obj.clutter.Count} objects in clutter)",
