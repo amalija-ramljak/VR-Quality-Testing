@@ -89,14 +89,14 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
 
         private void InitializeObstaclesSettings()
         {
-            obstacleMinDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinDistance, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
-            obstacleMaxDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxDistance, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
+            obstacleMinDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinDistance, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
+            obstacleMaxDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxDistance, defaultValue: 3f).ToString(CultureInfo.InvariantCulture);
 
             obstacleMinCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMinCount, defaultValue: 5).ToString(CultureInfo.InvariantCulture);
-            obstacleMaxCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount, defaultValue: 15).ToString(CultureInfo.InvariantCulture);
+            obstacleMaxCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount, defaultValue: 10).ToString(CultureInfo.InvariantCulture);
 
-            obstacleMinSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinSize, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
-            obstacleMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxSize, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
+            obstacleMinSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinSize, defaultValue: 0.5f).ToString(CultureInfo.InvariantCulture);
+            obstacleMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxSize, defaultValue: 1.5f).ToString(CultureInfo.InvariantCulture);
         }
 
         private void InitializeRoundSettings()
