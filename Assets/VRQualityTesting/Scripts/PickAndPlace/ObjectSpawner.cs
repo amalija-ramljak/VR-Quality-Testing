@@ -22,7 +22,8 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         #endregion
 
         private List<GameObject> ProxyList = new List<GameObject>();
-        private GameObject proxy_obj;
+        private GameObject goal_obj = null;
+        private GameObject proxy_obj = null;
 
         private List<Vector3> obstacle_pocetneKordinate = new List<Vector3>();
         private List<Vector3> obstacle_trenutneKordinate = new List<Vector3>();
@@ -62,7 +63,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         private void spawnGoal()
         {
             this.transform.rotation = Quaternion.identity;
-            Instantiate(goalPrefab, new Vector3(goalDistance, goalHeight, 0f), Quaternion.identity, this.transform);
+            goal_obj = Instantiate(goalPrefab, new Vector3(goalDistance, goalHeight, 0f), Quaternion.identity, this.transform);
             this.transform.Rotate(new Vector3(0f, UnityEngine.Random.Range(-goalRotationOffset, goalRotationOffset), 0f));
         }
 
@@ -76,24 +77,36 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
         private void spawnObject()
         {
-            // distance
-            float x = UnityEngine.Random.Range(objectMinDistance, objectMaxDistance);
-            float y = UnityEngine.Random.Range(objectMinHeight, objectMaxHeight);
+            var goal_Collider = goal_obj.GetComponent<Collider>();
 
-            // x distance, y height, z will be changed by rotation
-            Vector3 obj_spawn_position = new Vector3(x, y, 0f);
+            Vector3 obj_spawn_position;
+            Shape shape;
+            Collider obj_collider;
+            float x, y;
+            do
+            {
+                if (proxy_obj != null) Destroy(proxy_obj);
+                // distance
+                x = UnityEngine.Random.Range(objectMinDistance, objectMaxDistance);
+                y = UnityEngine.Random.Range(objectMinHeight, objectMaxHeight);
 
-            var shape = pickShape();
+                // x distance, y height, z will be changed by rotation
+                obj_spawn_position = new Vector3(x, y, 0f);
+
+                shape = pickShape();
+
+                proxy_obj = Instantiate(getShapePrefabFromEnum(shape), obj_spawn_position, Quaternion.identity, objectParent);
+                obj_collider = proxy_obj.GetComponent<Collider>();
+            } while (obj_collider.bounds.Intersects(goal_Collider.bounds));
 
             objects.Add(new PAPObject(obj_spawn_position, shape));
-
-            proxy_obj = Instantiate(getShapePrefabFromEnum(shape), obj_spawn_position, Quaternion.identity, objectParent);
         }
 
         private void spawnObstacles()
         {
             var clutter = new List<PAPObstacle>();
             var obj_Collider = proxy_obj.GetComponent<Collider>();
+            var goal_Collider = goal_obj.GetComponent<Collider>();
             Collider obstacle_Collider;
             GameObject proxy = null;
             Vector3 position;
@@ -115,7 +128,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
                     proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
                     obstacle_Collider = proxy.GetComponent<Collider>();
-                } while (obstacle_Collider.bounds.Intersects(obj_Collider.bounds));
+                } while (obstacle_Collider.bounds.Intersects(obj_Collider.bounds) || obstacle_Collider.bounds.Intersects(goal_Collider.bounds));
 
                 randObstacleSize = UnityEngine.Random.Range(obstacleMinSize, obstacleMaxSize);
                 proxy.transform.localScale = new Vector3(randObstacleSize, randObstacleSize, randObstacleSize);
