@@ -1515,7 +1515,7 @@ PrefabInstance:
     - target: {fileID: 524737256005525025, guid: 054b575615f779840afc9a661964e6cb,
         type: 3}
       propertyPath: m_text
-      value: Obstacles
+      value: Clutter
       objectReference: {fileID: 0}
     - target: {fileID: 1528893201934607378, guid: 054b575615f779840afc9a661964e6cb,
         type: 3}
@@ -2701,7 +2701,7 @@ PrefabInstance:
     - target: {fileID: 7934522756034295079, guid: 6339e23bf4cecdd429b470865d7525d0,
         type: 3}
       propertyPath: m_text
-      value: Maximum obstacle count
+      value: Maximum clutter element count
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6339e23bf4cecdd429b470865d7525d0, type: 3}
@@ -3065,7 +3065,7 @@ PrefabInstance:
     - target: {fileID: 7934522756034295079, guid: 6339e23bf4cecdd429b470865d7525d0,
         type: 3}
       propertyPath: m_text
-      value: Minimum obstacle count
+      value: Minimum clutter element count
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6339e23bf4cecdd429b470865d7525d0, type: 3}
@@ -5842,7 +5842,7 @@ PrefabInstance:
     - target: {fileID: 7934522756034295079, guid: 6339e23bf4cecdd429b470865d7525d0,
         type: 3}
       propertyPath: m_text
-      value: Minimum obstacle size
+      value: Minimum clutter element size
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6339e23bf4cecdd429b470865d7525d0, type: 3}
@@ -6989,7 +6989,7 @@ PrefabInstance:
     - target: {fileID: 7934522756034295079, guid: 6339e23bf4cecdd429b470865d7525d0,
         type: 3}
       propertyPath: m_text
-      value: Maximum obstacle size
+      value: Maximum clutter element size
       objectReference: {fileID: 0}
     - target: {fileID: 7934522756034295079, guid: 6339e23bf4cecdd429b470865d7525d0,
         type: 3}
