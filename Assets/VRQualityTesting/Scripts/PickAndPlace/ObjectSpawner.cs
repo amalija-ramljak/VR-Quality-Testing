@@ -82,16 +82,16 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             Vector3 obj_spawn_position;
             Shape shape;
             Collider obj_collider;
-            float x, y;
+            float z, y;
             do
             {
                 if (proxy_obj != null) Destroy(proxy_obj);
                 // distance
-                x = UnityEngine.Random.Range(objectMinDistance, objectMaxDistance);
+                z = UnityEngine.Random.Range(objectMinDistance, objectMaxDistance);
                 y = UnityEngine.Random.Range(objectMinHeight, objectMaxHeight);
 
-                // x distance, y height, z will be changed by rotation
-                obj_spawn_position = new Vector3(x, y, 0f);
+                // z distance, y height, x will be changed by rotation
+                obj_spawn_position = new Vector3(0f, y, z);
 
                 shape = pickShape();
 
