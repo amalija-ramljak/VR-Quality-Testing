@@ -81,10 +81,10 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
         {
             goalDistanceField.text = Settings.GetFloat(PickAndPlaceKeys.GoalDistance, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
 
-            goalRotationOffsetField.text = Settings.GetFloat(PickAndPlaceKeys.GoalRotationOffset, defaultValue: 180f).ToString(CultureInfo.InvariantCulture);
+            goalRotationOffsetField.text = Settings.GetFloat(PickAndPlaceKeys.GoalRotationOffset, defaultValue: 0f).ToString(CultureInfo.InvariantCulture);
 
             goalSizeField.text = Settings.GetFloat(PickAndPlaceKeys.GoalSize, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
-            goalHeightField.text = Settings.GetFloat(PickAndPlaceKeys.GoalHeight, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
+            goalHeightField.text = Settings.GetFloat(PickAndPlaceKeys.GoalHeight, defaultValue: 1.5f).ToString(CultureInfo.InvariantCulture);
         }
 
         private void InitializeObstaclesSettings()
