@@ -8,7 +8,11 @@ namespace VRQualityTesting.Scripts.PickAndPlace
     {
         private const string collisionTag = "Target";
 
-        public ObjectSpawner spawner;
+        private ObjectSpawner spawner;
+
+        private void Awake() {
+            spawner = GameObject.Find("ObjectSpawner").GetComponent<ObjectSpawner>();
+        }
 
         private void OnCollisionEnter(Collision other)
         {

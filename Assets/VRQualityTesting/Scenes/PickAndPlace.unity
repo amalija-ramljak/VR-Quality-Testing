@@ -2973,7 +2973,6 @@ MonoBehaviour:
   goalPrefab: {fileID: 1601496266203799248, guid: 314983ec7d78b5b459818f09ce0f95ed,
     type: 3}
   objectParent: {fileID: 1270042993}
-  playerTransform: {fileID: 0}
 --- !u!4 &1922130345
 Transform:
   m_ObjectHideFlags: 0
