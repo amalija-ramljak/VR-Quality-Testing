@@ -78,7 +78,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         private void spawnObject()
         {
             Vector3 obj_spawn_position;
-            Shape shape = pickShape();
+            GameObject shape = getShapePrefabFromEnum(pickShape());
             float z, y;
             do
             {
@@ -90,7 +90,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 // z distance, y height, x will be changed by rotation
                 obj_spawn_position = new Vector3(0f, y, z);
 
-                proxy_obj = Instantiate(getShapePrefabFromEnum(shape), obj_spawn_position, Quaternion.identity, objectParent);
+                proxy_obj = Instantiate(shape, obj_spawn_position, Quaternion.identity, objectParent);
             } while (checkIntersections(proxy_obj)
                     || Vector3.Distance(obj_spawn_position, this.transform.position) > objectMaxDistance);
 
