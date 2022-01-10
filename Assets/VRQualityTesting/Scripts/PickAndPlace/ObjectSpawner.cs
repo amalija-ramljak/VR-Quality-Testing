@@ -97,7 +97,8 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
                 proxy_obj = Instantiate(getShapePrefabFromEnum(shape), obj_spawn_position, Quaternion.identity, objectParent);
                 obj_collider = proxy_obj.GetComponent<Collider>();
-            } while (obj_collider.bounds.Intersects(goal_Collider.bounds));
+            } while (obj_collider.bounds.Intersects(goal_Collider.bounds)
+                    || Vector3.Distance(obj_spawn_position, playerTransform.position) > objectMaxDistance);
 
             objects.Add(new PAPObject(obj_spawn_position, shape));
         }
