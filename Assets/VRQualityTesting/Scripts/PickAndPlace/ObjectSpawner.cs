@@ -98,6 +98,9 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             } while (obj_collider.bounds.Intersects(goal_Collider.bounds)
                     || Vector3.Distance(obj_spawn_position, playerTransform.position) > objectMaxDistance);
 
+            var randScale = UnityEngine.Random.Range(objectMinSize, objectMaxSize);
+            proxy_obj.transform.localScale = new Vector3(randScale, randScale, randScale);
+
             objects.Add(new PAPObject(obj_spawn_position, shape));
         }
 
