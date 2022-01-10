@@ -227,16 +227,17 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 hasIntersection |= objectBounds.Intersects(getBounds(goal_obj));
             }
 
-            if (checkObject)
+            if (!hasIntersection && checkObject)
             {
                 hasIntersection |= objectBounds.Intersects(getBounds(proxy_obj));
             }
 
-            if (checkObstacles)
+            if (!hasIntersection && checkObstacles)
             {
                 foreach (GameObject clutterElement in ProxyList)
                 {
                     hasIntersection |= objectBounds.Intersects(getBounds(clutterElement));
+                    if (hasIntersection) break;
                 }
             }
 
