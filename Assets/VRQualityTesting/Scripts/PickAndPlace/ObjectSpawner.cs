@@ -78,7 +78,8 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         private void spawnObject()
         {
             Vector3 obj_spawn_position;
-            GameObject shape = getShapePrefabFromEnum(pickShape());
+            Shape shapeType = pickShape();
+            GameObject shape = getShapePrefabFromEnum(shapeType);
             float z, y;
             do
             {
@@ -97,7 +98,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             var randScale = UnityEngine.Random.Range(objectMinSize, objectMaxSize);
             proxy_obj.transform.localScale = new Vector3(randScale, randScale, randScale);
 
-            objects.Add(new PAPObject(obj_spawn_position, shape));
+            objects.Add(new PAPObject(obj_spawn_position, shapeType));
         }
 
         private void spawnObstacles()
