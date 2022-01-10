@@ -19,8 +19,9 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         [SerializeField] private GameObject obstaclePrefab;
         [SerializeField] private GameObject goalPrefab;
         [SerializeField] Transform objectParent;
-        #endregion
+        [SerializeField] Transform playerTransform;
 
+        #endregion
         private List<GameObject> ProxyList = new List<GameObject>();
         private GameObject goal_obj = null;
         private GameObject proxy_obj = null;
@@ -224,6 +225,11 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 case Shape.sphere: return spherePrefab;
                 default: return squarePrefab;
             }
+        }
+
+        private bool checkIntersections(GameObject newObject, bool checkGoal = true, bool checkObject = false, bool checkObstacles = false)
+        {
+            return true;
         }
 
         public void PublishReport() => SessionPublisher.Publish(new Session(objects), ".txt", ".txt");
