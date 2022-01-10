@@ -120,10 +120,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 {
                     if (!newLoop) Destroy(proxy);
                     newLoop = false;
-                    do
-                    {
-                        position = proxy_obj.transform.position + UnityEngine.Random.insideUnitSphere * UnityEngine.Random.Range(obstacleMinDistance, obstacleMaxDistance);
-                    } while (Vector3.Distance(position, proxy_obj.transform.position) < obstacleMinDistance);
+                    position = proxy_obj.transform.position + UnityEngine.Random.insideUnitSphere * UnityEngine.Random.Range(obstacleMinDistance, obstacleMaxDistance);
 
                     proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
                     obstacle_Collider = proxy.GetComponent<Collider>();
