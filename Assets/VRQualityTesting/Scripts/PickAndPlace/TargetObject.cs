@@ -11,11 +11,11 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         public DateTime DeathTimestamp { get; set; }
         public bool isPlaced = false;
         public Vector3 spawnPosition;
-        public Vector3 spawnSize;
+        public float spawnSize;
         public ObjectSpawner.Shape shape;
         public List<PAPObstacle> clutter;
 
-        public PAPObject(Vector3 spawnPosition, Vector3 spawnSize, ObjectSpawner.Shape shape)
+        public PAPObject(Vector3 spawnPosition, float spawnSize, ObjectSpawner.Shape shape)
         {
             this.spawnPosition = spawnPosition;
             this.spawnSize = spawnSize;
@@ -37,12 +37,12 @@ namespace VRQualityTesting.Scripts.PickAndPlace
     {
         public Vector3 initialCoords;
         public Vector3 finalCoords;
-        public Vector3 size;
+        public float size;
 
         public PAPObstacle(
             Vector3 initialCoordinates,
             Vector3 finalCoordinates,
-            Vector3 size
+            float size
         )
         {
             this.initialCoords = initialCoordinates;

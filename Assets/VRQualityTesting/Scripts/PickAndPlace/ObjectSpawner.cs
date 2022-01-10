@@ -143,22 +143,19 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 obstacle_trenutneKordinate.Add(t.position);
             }
 
-            for (int element = 0; element < ProxyList.Count; element++)
+            var clutter = new List<PAPObstacle>();
+            var oldClutter = objects[objects.Count - 1].clutter;
+            for (int i = 0; i < ProxyList.Count; i++)
             {
-                Destroy(ProxyList[element]);
+                Destroy(ProxyList[i]);
+                clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_trenutneKordinate[i], oldClutter[i].size));
             }
+            objects[objects.Count - 1].setClutter(clutter);
+            objects[objects.Count - 1].setPlaced(true);
 
             Destroy(proxy_obj);
             obstacle_ukupnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
             obstacle_kordinatnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
-
-            var clutter = new List<PAPObstacle>();
-            for (int i = 0; i < obstacle_pocetneKordinate.Count; i++)
-            {
-                clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_trenutneKordinate[i]));
-            }
-            objects[objects.Count - 1].setClutter(clutter);
-            objects[objects.Count - 1].setPlaced(true);
 
             spawnNewPlacement();
         }
