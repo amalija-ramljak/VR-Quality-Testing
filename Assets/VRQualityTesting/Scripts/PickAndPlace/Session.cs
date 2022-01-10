@@ -88,16 +88,17 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                         detailedInformation.Add($"{Environment.NewLine}{Environment.NewLine}");
                     }
                     detailedInformation.AddRange(new List<string> {
-                        $"# Object {idx} ({obj.shape.ToString()})",
+                        $"# Object {idx} ({obj.shape.ToString()}, size {obj.spawnSize})",
                         $"Created at time: {obj.BirthTimestamp.ToString(TimestampFormat)}",
                         $"Placed at time: {obj.DeathTimestamp.ToString(TimestampFormat)}",
                         $"Clutter data ({obj.clutter.Count} objects in clutter)",
-                        "Initial position, Final position, Euclidean distance",
+                        "Size, Initial position, Final position, Euclidean distance",
                     });
 
                     detailedInformation.AddRange(
                         obj.clutter.Select(
                             clutterObj =>
+                                $"{clutterObj.size}" +
                                 $"{clutterObj.initialCoords}, " +
                                 $"{clutterObj.finalCoords}, " +
                                 $"{Vector3.Distance(clutterObj.initialCoords, clutterObj.finalCoords)}"
