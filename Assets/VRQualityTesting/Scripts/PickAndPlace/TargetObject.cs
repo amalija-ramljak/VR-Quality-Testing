@@ -37,14 +37,17 @@ namespace VRQualityTesting.Scripts.PickAndPlace
     {
         public Vector3 initialCoords;
         public Vector3 finalCoords;
+        public Vector3 size;
 
         public PAPObstacle(
             Vector3 initialCoordinates,
-            Vector3 finalCoordinates
+            Vector3 finalCoordinates,
+            Vector3 size
         )
         {
             this.initialCoords = initialCoordinates;
             this.finalCoords = finalCoordinates;
+            this.size = size;
         }
     }
 }

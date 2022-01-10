@@ -128,7 +128,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 obstacle_pocetneKordinate.Add(position);
                 ProxyList.Add(proxy);
 
-                clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_pocetneKordinate[i]));
+                clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_pocetneKordinate[i], randObstacleSize));
             }
 
             objects[objects.Count - 1].setClutter(clutter);
