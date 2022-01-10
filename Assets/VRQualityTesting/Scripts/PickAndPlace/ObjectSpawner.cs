@@ -98,7 +98,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             var randScale = UnityEngine.Random.Range(objectMinSize, objectMaxSize);
             proxy_obj.transform.localScale = new Vector3(randScale, randScale, randScale);
 
-            objects.Add(new PAPObject(obj_spawn_position, shapeType));
+            objects.Add(new PAPObject(obj_spawn_position, randScale, shapeType));
         }
 
         private void spawnObstacles()

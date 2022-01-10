@@ -11,12 +11,14 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         public DateTime DeathTimestamp { get; set; }
         public bool isPlaced = false;
         public Vector3 spawnPosition;
+        public Vector3 spawnSize;
         public ObjectSpawner.Shape shape;
         public List<PAPObstacle> clutter;
 
-        public PAPObject(Vector3 spawnPosition, ObjectSpawner.Shape shape)
+        public PAPObject(Vector3 spawnPosition, Vector3 spawnSize, ObjectSpawner.Shape shape)
         {
             this.spawnPosition = spawnPosition;
+            this.spawnSize = spawnSize;
             this.shape = shape;
         }
 
