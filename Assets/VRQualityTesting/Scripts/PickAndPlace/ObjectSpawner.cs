@@ -80,7 +80,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             var goal_Collider = goal_obj.GetComponent<Collider>();
 
             Vector3 obj_spawn_position;
-            Shape shape;
+            Shape shape = pickShape();
             Collider obj_collider;
             float z, y;
             do
@@ -92,8 +92,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
                 // z distance, y height, x will be changed by rotation
                 obj_spawn_position = new Vector3(0f, y, z);
-
-                shape = pickShape();
 
                 proxy_obj = Instantiate(getShapePrefabFromEnum(shape), obj_spawn_position, Quaternion.identity, objectParent);
                 obj_collider = proxy_obj.GetComponent<Collider>();
