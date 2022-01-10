@@ -1842,7 +1842,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1270042992}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.9, y: 0, z: 0}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2973,6 +2973,7 @@ MonoBehaviour:
   goalPrefab: {fileID: 1601496266203799248, guid: 314983ec7d78b5b459818f09ce0f95ed,
     type: 3}
   objectParent: {fileID: 1270042993}
+  playerTransform: {fileID: 0}
 --- !u!4 &1922130345
 Transform:
   m_ObjectHideFlags: 0

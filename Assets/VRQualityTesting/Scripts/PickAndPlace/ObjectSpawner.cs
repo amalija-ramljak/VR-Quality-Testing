@@ -19,8 +19,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         [SerializeField] private GameObject obstaclePrefab;
         [SerializeField] private GameObject goalPrefab;
         [SerializeField] Transform objectParent;
-        [SerializeField] Transform playerTransform;
-
         #endregion
         private List<GameObject> ProxyList = new List<GameObject>();
         private GameObject goal_obj = null;
@@ -79,11 +77,8 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
         private void spawnObject()
         {
-            var goal_Collider = goal_obj.GetComponent<Collider>();
-
             Vector3 obj_spawn_position;
             Shape shape = pickShape();
-            Collider obj_collider;
             float z, y;
             do
             {
@@ -96,9 +91,8 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 obj_spawn_position = new Vector3(0f, y, z);
 
                 proxy_obj = Instantiate(getShapePrefabFromEnum(shape), obj_spawn_position, Quaternion.identity, objectParent);
-                obj_collider = proxy_obj.GetComponent<Collider>();
-            } while (obj_collider.bounds.Intersects(goal_Collider.bounds)
-                    || Vector3.Distance(obj_spawn_position, playerTransform.position) > objectMaxDistance);
+            } while (checkIntersections(proxy_obj)
+                    || Vector3.Distance(obj_spawn_position, this.transform.position) > objectMaxDistance);
 
             var randScale = UnityEngine.Random.Range(objectMinSize, objectMaxSize);
             proxy_obj.transform.localScale = new Vector3(randScale, randScale, randScale);
@@ -109,9 +103,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         private void spawnObstacles()
         {
             var clutter = new List<PAPObstacle>();
-            var obj_Collider = proxy_obj.GetComponent<Collider>();
-            var goal_Collider = goal_obj.GetComponent<Collider>();
-            Collider obstacle_Collider;
             GameObject proxy = null;
             Vector3 position;
             float randObstacleSize;
@@ -128,8 +119,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                     position = proxy_obj.transform.position + UnityEngine.Random.insideUnitSphere * UnityEngine.Random.Range(obstacleMinDistance, obstacleMaxDistance);
 
                     proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
-                    obstacle_Collider = proxy.GetComponent<Collider>();
-                } while (obstacle_Collider.bounds.Intersects(obj_Collider.bounds) || obstacle_Collider.bounds.Intersects(goal_Collider.bounds));
+                } while (checkIntersections(proxy, true, true, true));
 
                 randObstacleSize = UnityEngine.Random.Range(obstacleMinSize, obstacleMaxSize);
                 proxy.transform.localScale = new Vector3(randObstacleSize, randObstacleSize, randObstacleSize);
@@ -229,7 +219,38 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
         private bool checkIntersections(GameObject newObject, bool checkGoal = true, bool checkObject = false, bool checkObstacles = false)
         {
-            return true;
+            bool hasIntersection = false;
+            var objectBounds = getBounds(newObject);
+
+            if (checkGoal)
+            {
+                hasIntersection |= objectBounds.Intersects(getBounds(goal_obj));
+            }
+
+            if (checkObject)
+            {
+                hasIntersection |= objectBounds.Intersects(getBounds(proxy_obj));
+            }
+
+            if (checkObstacles)
+            {
+                foreach (GameObject clutterElement in ProxyList)
+                {
+                    hasIntersection |= objectBounds.Intersects(getBounds(clutterElement));
+                }
+            }
+
+            return hasIntersection;
+        }
+
+        private Collider getCollider(GameObject obj)
+        {
+            return obj.GetComponent<Collider>();
+        }
+
+        private Bounds getBounds(GameObject obj)
+        {
+            return getCollider(obj).bounds;
         }
 
         public void PublishReport() => SessionPublisher.Publish(new Session(objects), ".txt", ".txt");
