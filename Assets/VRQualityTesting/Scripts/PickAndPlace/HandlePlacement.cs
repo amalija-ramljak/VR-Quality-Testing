@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandlePlacement : MonoBehaviour
+namespace VRQualityTesting.Scripts.PickAndPlace
 {
-    // Start is called before the first frame update
-    void Start()
+    public class HandlePlacement : MonoBehaviour
     {
-        
-    }
+        private const string collisionTag = "Target";
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public ObjectSpawner spawner;
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.tag == collisionTag)
+            {
+                Debug.Log("Placed");
+                spawner.handlePlacement();
+            }
+        }
     }
 }
