@@ -64,6 +64,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         {
             this.transform.rotation = Quaternion.identity;
             goal_obj = Instantiate(goalPrefab, new Vector3(goalDistance, goalHeight, 0f), Quaternion.identity, this.transform);
+            goal_obj.transform.localScale = new Vector3(goalSize, goalSize, goalSize);
             this.transform.Rotate(new Vector3(0f, goalRotationOffset, 0f));
         }
 
