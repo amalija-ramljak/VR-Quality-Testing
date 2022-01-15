@@ -63,7 +63,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         {
             this.transform.rotation = Quaternion.identity;
             goal_obj = Instantiate(goalPrefab, new Vector3(goalDistance, goalHeight, 0f), Quaternion.identity, this.transform);
-            goal_obj.transform.localScale = new Vector3(goalSize, goalSize, goalSize);
+            goal_obj.transform.localScale = new Vector3(goalSize, 0.25f, goalSize);
             this.transform.Rotate(new Vector3(0f, goalRotationOffset, 0f));
         }
 
@@ -80,6 +80,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             Vector3 obj_spawn_position;
             Shape shapeType = pickShape();
             GameObject shape = getShapePrefabFromEnum(shapeType);
+            var randScale = UnityEngine.Random.Range(objectMinSize, objectMaxSize);
             float z, y;
             do
             {
@@ -92,11 +93,9 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 obj_spawn_position = new Vector3(0f, y, z);
 
                 proxy_obj = Instantiate(shape, obj_spawn_position, Quaternion.identity, objectParent);
+            proxy_obj.transform.localScale = new Vector3(randScale, randScale, randScale);
             } while (checkIntersections(proxy_obj)
                     || Vector3.Distance(obj_spawn_position, this.transform.position) > objectMaxDistance);
-
-            var randScale = UnityEngine.Random.Range(objectMinSize, objectMaxSize);
-            proxy_obj.transform.localScale = new Vector3(randScale, randScale, randScale);
 
             objects.Add(new PAPObject(obj_spawn_position, randScale, shapeType));
         }
@@ -112,6 +111,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             int randObstacleCount = UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount + 1);
             for (int i = 0; i < randObstacleCount; i++)
             {
+                randObstacleSize = UnityEngine.Random.Range(obstacleMinSize, obstacleMaxSize);
                 newLoop = true;
                 do
                 {
@@ -120,10 +120,9 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                     position = proxy_obj.transform.position + UnityEngine.Random.insideUnitSphere * UnityEngine.Random.Range(obstacleMinDistance, obstacleMaxDistance);
 
                     proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
+                    proxy.transform.localScale = new Vector3(randObstacleSize, randObstacleSize, randObstacleSize);
                 } while (checkIntersections(proxy, true, true, true));
 
-                randObstacleSize = UnityEngine.Random.Range(obstacleMinSize, obstacleMaxSize);
-                proxy.transform.localScale = new Vector3(randObstacleSize, randObstacleSize, randObstacleSize);
 
                 obstacle_pocetneKordinate.Add(position);
                 ProxyList.Add(proxy);
