@@ -14,7 +14,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             spawner = GameObject.Find("ObjectSpawner").GetComponent<ObjectSpawner>();
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == collisionTag)
             {
