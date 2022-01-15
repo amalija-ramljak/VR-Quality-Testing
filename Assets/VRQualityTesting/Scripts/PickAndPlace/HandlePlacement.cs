@@ -18,7 +18,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         {
             if (other.gameObject.tag == collisionTag)
             {
-                Debug.Log("Placed");
                 spawner.handlePlacement();
             }
         }
