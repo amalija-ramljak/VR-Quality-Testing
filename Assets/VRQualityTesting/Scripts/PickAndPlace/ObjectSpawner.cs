@@ -24,10 +24,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         private GameObject goal_obj = null;
         private GameObject proxy_obj = null;
 
-        private List<Vector3> obstacle_pocetneKordinate = new List<Vector3>();
-        private List<Vector3> obstacle_trenutneKordinate = new List<Vector3>();
-        int broj_Dotaknutih_Kocaka = 0;
-
         private List<PAPObject> objects = new List<PAPObject>();
 
         #region Settings Variables
@@ -52,9 +48,10 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         [HideInInspector] public float goalSize { get; set; }
         [HideInInspector] public float goalHeight { get; set; }
         #endregion
-
+        private CustomLogger logger;
         void Start()
         {
+            logger = new CustomLogger(@"C:\Users\tyco_\Documents\faks\VR-Quality-Testing\Debug.log");
             spawnGoal();
             spawnNewPlacement();
         }
@@ -74,27 +71,29 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             spawnObject();
             spawnObstacles();
             objectParent.Rotate(new Vector3(0f, UnityEngine.Random.Range(-objectMaxRotationOffset, objectMaxRotationOffset), 0f));
+            Physics.SyncTransforms();
         }
 
         private void spawnObject()
         {
-            Vector3 obj_spawn_position;
+            Vector3 obj_spawn_position = new Vector3(0, 0, 0);
             Shape shapeType = pickShape();
             GameObject shape = getShapePrefabFromEnum(shapeType);
             var randScale = UnityEngine.Random.Range(objectMinSize, objectMaxSize);
+
+            proxy_obj = Instantiate(shape, obj_spawn_position, Quaternion.identity, objectParent);
+            proxy_obj.transform.localScale *= randScale;
             float z, y;
             do
             {
-                if (proxy_obj != null) Destroy(proxy_obj);
                 // distance
                 z = UnityEngine.Random.Range(objectMinDistance, objectMaxDistance);
                 y = UnityEngine.Random.Range(objectMinHeight, objectMaxHeight);
 
                 // z distance, y height, x will be changed by rotation
                 obj_spawn_position = new Vector3(0f, y, z);
+                proxy_obj.transform.position = obj_spawn_position;
 
-                proxy_obj = Instantiate(shape, obj_spawn_position, Quaternion.identity, objectParent);
-                proxy_obj.transform.localScale *= randScale;
                 Physics.SyncTransforms();
             } while (checkIntersections(proxy_obj)
                     || Vector3.Distance(obj_spawn_position, objectParent.position) > objectMaxDistance);
@@ -108,7 +107,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         {
             var clutter = new List<PAPObstacle>();
             GameObject proxy = null;
-            Vector3 position;
+            Vector3 position = new Vector3(0, 0, 0);
             float randObstacleSize;
 
             bool newLoop;
@@ -116,23 +115,19 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             for (int i = 0; i < randObstacleCount; i++)
             {
                 randObstacleSize = UnityEngine.Random.Range(obstacleMinSize, obstacleMaxSize);
-                newLoop = true;
+                proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
+                proxy.transform.localScale *= randObstacleSize;
                 do
                 {
-                    if (!newLoop) Destroy(proxy);
-                    newLoop = false;
                     position = proxy_obj.transform.position + UnityEngine.Random.insideUnitSphere * UnityEngine.Random.Range(obstacleMinDistance, obstacleMaxDistance);
 
-                    proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
-                    proxy.transform.localScale *= randObstacleSize;
+                    proxy.transform.position = position;
                     Physics.SyncTransforms();
                 } while (checkIntersections(proxy, true, true, true));
 
-
-                obstacle_pocetneKordinate.Add(position);
                 ProxyList.Add(proxy);
 
-                clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_pocetneKordinate[i], randObstacleSize));
+                clutter.Add(new PAPObstacle(position, position, randObstacleSize));
             }
 
             foreach (var clutterElement in ProxyList)
@@ -147,21 +142,17 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         {
             objects[objects.Count - 1].DeathTimestamp = DateTime.Now;
 
-            foreach (Transform t in objectParent.GetComponentsInChildren(typeof(Transform)).Skip(1))
-            {
-                obstacle_trenutneKordinate.Add(t.position);
-            }
-
-            var clutter = new List<PAPObstacle>();
+            var newClutter = new List<PAPObstacle>();
             var oldClutter = objects[objects.Count - 1].clutter;
             for (int i = 0; i < ProxyList.Count; i++)
             {
+                newClutter.Add(new PAPObstacle(oldClutter[i].initialCoords, ProxyList[i].transform.position, oldClutter[i].size));
                 Destroy(ProxyList[i]);
-                clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_trenutneKordinate[i], oldClutter[i].size));
             }
-            objects[objects.Count - 1].setClutter(clutter);
+            objects[objects.Count - 1].setClutter(newClutter);
             objects[objects.Count - 1].setPlaced(true);
 
+            ProxyList.Clear();
             Destroy(proxy_obj);
 
             spawnNewPlacement();
