@@ -70,7 +70,7 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
             objectMaxRotationOffsetField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset, defaultValue: 180f).ToString(CultureInfo.InvariantCulture);
 
             objectMinSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMinSize, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
-            objectMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize, defaultValue: 2f).ToString(CultureInfo.InvariantCulture);
+            objectMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize, defaultValue: 1.5f).ToString(CultureInfo.InvariantCulture);
 
             useObjectTypeSquareField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSquare, defaultValue: true);
             useObjectTypeCylinderField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder, defaultValue: true);
@@ -96,7 +96,7 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
             obstacleMaxCountField.text = Settings.GetInt(PickAndPlaceKeys.ObstacleMaxCount, defaultValue: 10).ToString(CultureInfo.InvariantCulture);
 
             obstacleMinSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMinSize, defaultValue: 0.5f).ToString(CultureInfo.InvariantCulture);
-            obstacleMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxSize, defaultValue: 1.5f).ToString(CultureInfo.InvariantCulture);
+            obstacleMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObstacleMaxSize, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
         }
 
         private void InitializeRoundSettings()
