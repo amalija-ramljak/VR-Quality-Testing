@@ -1,10 +1,10 @@
 using System;
 using System.IO;
 
-public class Logger
+public class CustomLogger
 {
 
-    public Logger(string logFilePath)
+    public CustomLogger(string logFilePath)
     {
         if(!logFilePath.EndsWith(".log"))
             logFilePath += ".log";
