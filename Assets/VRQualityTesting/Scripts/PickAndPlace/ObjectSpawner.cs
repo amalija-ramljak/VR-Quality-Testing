@@ -133,6 +133,11 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 clutter.Add(new PAPObstacle(obstacle_pocetneKordinate[i], obstacle_pocetneKordinate[i], randObstacleSize));
             }
 
+            foreach (var clutterElement in ProxyList)
+            {
+                enableRigidbody(clutterElement);
+            }
+
             objects[objects.Count - 1].setClutter(clutter);
         }
 
@@ -156,8 +161,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             objects[objects.Count - 1].setPlaced(true);
 
             Destroy(proxy_obj);
-            obstacle_ukupnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
-            obstacle_kordinatnaUdaljenostOdPocPozicije(obstacle_pocetneKordinate, obstacle_trenutneKordinate);
 
             spawnNewPlacement();
         }
