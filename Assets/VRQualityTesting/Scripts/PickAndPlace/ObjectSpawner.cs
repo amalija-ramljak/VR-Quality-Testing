@@ -65,6 +65,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             goal_obj = Instantiate(goalPrefab, new Vector3(goalDistance, goalHeight, 0f), Quaternion.identity, this.transform);
             goal_obj.transform.localScale = new Vector3(goalSize, 0.25f, goalSize);
             this.transform.Rotate(new Vector3(0f, goalRotationOffset, 0f));
+            Physics.SyncTransforms();
         }
 
         private void spawnNewPlacement()
@@ -94,12 +95,11 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
                 proxy_obj = Instantiate(shape, obj_spawn_position, Quaternion.identity, objectParent);
                 proxy_obj.transform.localScale *= randScale;
-                // proxy_obj.transform.localScale *= new Vector3(randScale, randScale, randScale);
+                Physics.SyncTransforms();
             } while (checkIntersections(proxy_obj)
                     || Vector3.Distance(obj_spawn_position, objectParent.position) > objectMaxDistance);
 
             proxy_obj.tag = "Target";
-            enableRigidbody(proxy_obj);
 
             objects.Add(new PAPObject(obj_spawn_position, randScale, shapeType));
         }
@@ -125,7 +125,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
                     proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
                     proxy.transform.localScale *= randObstacleSize;
-                    // proxy.transform.localScale *= new Vector3(randObstacleSize, randObstacleSize, randObstacleSize);
+                    Physics.SyncTransforms();
                 } while (checkIntersections(proxy, true, true, true));
 
 
@@ -165,31 +165,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             Destroy(proxy_obj);
 
             spawnNewPlacement();
-        }
-
-        private void obstacle_ukupnaUdaljenostOdPocPozicije(List<Vector3> poc_kord, List<Vector3> tren_kord)
-        {
-            broj_Dotaknutih_Kocaka = 0;
-            for (int i = 0; i < poc_kord.Count; i++)
-            {
-                float dist = Vector3.Distance(poc_kord[i], tren_kord[i]);
-                //Debug.Log("OBS UDALJENOST" + dist);
-                if (dist != 0) { broj_Dotaknutih_Kocaka++; }
-            }
-        }
-        private void obstacle_kordinatnaUdaljenostOdPocPozicije(List<Vector3> poc_kord, List<Vector3> tren_kord)
-        {
-            broj_Dotaknutih_Kocaka = 0;
-            for (int i = 0; i < poc_kord.Count; i++)
-            {
-                float x = poc_kord[i].x - tren_kord[i].x;
-                //Debug.Log("XXX" + x);
-                float y = poc_kord[i].y - tren_kord[i].y;
-                //Debug.Log("YYY" + y);
-                float z = poc_kord[i].z - tren_kord[i].z;
-                //Debug.Log("ZZZ" + z);
-                if (x != 0 || y != 0 || z != 0) { broj_Dotaknutih_Kocaka++; }
-            }
         }
 
         public enum Shape
