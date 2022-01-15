@@ -95,7 +95,10 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 proxy_obj = Instantiate(shape, obj_spawn_position, Quaternion.identity, objectParent);
             proxy_obj.transform.localScale = new Vector3(randScale, randScale, randScale);
             } while (checkIntersections(proxy_obj)
-                    || Vector3.Distance(obj_spawn_position, this.transform.position) > objectMaxDistance);
+                    || Vector3.Distance(obj_spawn_position, objectParent.position) > objectMaxDistance);
+
+            proxy_obj.tag = "Target";
+            enableRigidbody(proxy_obj);
 
             objects.Add(new PAPObject(obj_spawn_position, randScale, shapeType));
         }
@@ -241,14 +244,20 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             return hasIntersection;
         }
 
+        private Bounds getBounds(GameObject obj)
+        {
+            return getCollider(obj).bounds;
+        }
+
         private Collider getCollider(GameObject obj)
         {
             return obj.GetComponent<Collider>();
         }
 
-        private Bounds getBounds(GameObject obj)
+
+        private void enableRigidbody(GameObject obj)
         {
-            return getCollider(obj).bounds;
+            obj.GetComponent<Rigidbody>().isKinematic = false;
         }
 
         public void PublishReport() => SessionPublisher.Publish(new Session(objects), ".txt", ".txt");
