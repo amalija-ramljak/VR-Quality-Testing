@@ -89,6 +89,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                     }
                     detailedInformation.AddRange(new List<string> {
                         $"# Object {idx} ({obj.shape.ToString()}, size {obj.spawnSize})",
+                        $"Created at position: {obj.spawnPosition}",
                         $"Created at time: {obj.BirthTimestamp.ToString(TimestampFormat)}",
                         $"Placed at time: {obj.DeathTimestamp.ToString(TimestampFormat)}",
                         $"Clutter data ({obj.clutter.Count} objects in clutter)",
