@@ -69,8 +69,8 @@ namespace VRQualityTesting.Scripts.PickAndPlaceMenu
 
             objectMaxRotationOffsetField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxRotationOffset, defaultValue: 180f).ToString(CultureInfo.InvariantCulture);
 
-            objectMinSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMinSize, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
-            objectMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize, defaultValue: 1.5f).ToString(CultureInfo.InvariantCulture);
+            objectMinSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMinSize, defaultValue: 0.25f).ToString(CultureInfo.InvariantCulture);
+            objectMaxSizeField.text = Settings.GetFloat(PickAndPlaceKeys.ObjectMaxSize, defaultValue: 1f).ToString(CultureInfo.InvariantCulture);
 
             useObjectTypeSquareField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeSquare, defaultValue: true);
             useObjectTypeCylinderField.isOn = Settings.GetBool(PickAndPlaceKeys.UseObjectTypeCylinder, defaultValue: true);
