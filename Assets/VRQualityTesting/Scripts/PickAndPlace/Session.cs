@@ -89,7 +89,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                     }
                     detailedInformation.AddRange(new List<string> {
                         $"# Object {idx} ({obj.shape.ToString()}, size {obj.spawnSize})",
-                        $"Created at position: {obj.spawnPosition}",
+                        $"Created at position: {obj.spawnPosition.ToString("F3")}",
                         $"Created at time: {obj.BirthTimestamp.ToString(TimestampFormat)}",
                         $"Placed at time: {obj.DeathTimestamp.ToString(TimestampFormat)}",
                         $"Clutter data ({obj.clutter.Count} objects in clutter)",
@@ -100,8 +100,8 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                         obj.clutter.Select(
                             clutterObj =>
                                 $"{clutterObj.size}" +
-                                $"{clutterObj.initialCoords}, " +
-                                $"{clutterObj.finalCoords}, " +
+                                $"{clutterObj.initialCoords.ToString("F3")}, " +
+                                $"{clutterObj.finalCoords.ToString("F3")}, " +
                                 $"{Vector3.Distance(clutterObj.initialCoords, clutterObj.finalCoords)}"
                         )
                     );
