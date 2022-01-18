@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3891573544794638391
+--- !u!1 &134022376957585786
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3891573544794638387}
-  - component: {fileID: 3891573544794638388}
-  - component: {fileID: 3891573544794638389}
-  - component: {fileID: 3891573544794638390}
-  - component: {fileID: 162625833358657200}
-  - component: {fileID: 7789489677527456787}
+  - component: {fileID: 8085699290437902688}
+  - component: {fileID: 5743243071779414224}
+  - component: {fileID: 5886359755149430965}
   m_Layer: 0
-  m_Name: ObjectCylinderPrefab
+  m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3891573544794638387
+--- !u!4 &8085699290437902688
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3891573544794638391}
+  m_GameObject: {fileID: 134022376957585786}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 3891573544794638387}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3891573544794638388
+--- !u!33 &5743243071779414224
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3891573544794638391}
+  m_GameObject: {fileID: 134022376957585786}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3891573544794638389
+--- !u!23 &5886359755149430965
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3891573544794638391}
+  m_GameObject: {fileID: 134022376957585786}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -84,6 +81,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3891573544794638391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3891573544794638387}
+  - component: {fileID: 3891573544794638390}
+  - component: {fileID: 162625833358657200}
+  - component: {fileID: 7789489677527456787}
+  m_Layer: 0
+  m_Name: ObjectCylinderPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3891573544794638387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3891573544794638391}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8085699290437902688}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &3891573544794638390
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -94,8 +125,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 0.5
+  m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!114 &162625833358657200
@@ -114,22 +145,22 @@ MonoBehaviour:
   GrabButton: 2
   Grabtype: 2
   GrabPhysics: 4
-  GrabMechanic: 1
+  GrabMechanic: 0
   GrabSpeed: 15
   RemoteGrabbable: 0
   RemoteGrabMechanic: 0
-  RemoteGrabDistance: 2
-  ThrowForceMultiplier: 2
-  ThrowForceMultiplierAngular: 1.5
+  RemoteGrabDistance: 0
+  ThrowForceMultiplier: 0
+  ThrowForceMultiplierAngular: 0
   BreakDistance: 0
   HideHandGraphics: 0
-  ParentToHands: 0
-  ParentHandModel: 1
+  ParentToHands: 1
+  ParentHandModel: 0
   SnapHandModel: 1
   CanBeDropped: 1
-  CanBeSnappedToSnapZone: 1
+  CanBeSnappedToSnapZone: 0
   ForceDisableKinematicOnDrop: 0
-  InstantMovement: 0
+  InstantMovement: 1
   MakeChildCollidersGrabbable: 0
   handPoseType: 1
   SelectedHandPose: {fileID: 0}
@@ -153,7 +184,7 @@ MonoBehaviour:
   CollisionAngularMotionY: 2
   CollisionAngularMotionZ: 2
   ApplyCorrectiveForce: 1
-  MoveVelocityForce: 3000
+  MoveVelocityForce: 20000
   MoveAngularVelocityForce: 90
   LastGrabTime: 0
   LastDropTime: 0
@@ -175,11 +206,11 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3891573544794638391}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 100
+  m_Mass: 50
+  m_Drag: 50
   m_AngularDrag: 100
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 2
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 3
