@@ -96,6 +96,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                     || Vector3.Distance(obj_spawn_position, objectParent.position) > objectMaxDistance);
 
             proxy_obj.tag = "Target";
+            enableRigidbody(proxy_obj);
 
             objects.Add(new PAPObject(obj_spawn_position, randScale, shapeType));
         }
@@ -107,6 +108,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             Vector3 position = new Vector3(0, 0, 0);
             float randObstacleSize;
 
+            int attempts = 0;
             int randObstacleCount = UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount + 1);
             for (int i = 0; i < randObstacleCount; i++)
             {
@@ -119,7 +121,8 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
                     proxy.transform.position = position;
                     Physics.SyncTransforms();
-                } while (checkIntersections(proxy, true, true, true));
+                    attempts++;
+                } while (checkIntersections(proxy, true, true, true) && attempts < 10);
 
                 ProxyList.Add(proxy);
 
