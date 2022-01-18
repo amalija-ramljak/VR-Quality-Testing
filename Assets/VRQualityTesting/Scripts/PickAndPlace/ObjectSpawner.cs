@@ -1,10 +1,7 @@
 using System;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VRQualityTesting.Scripts.Core;
-using VRQualityTesting.Scripts.PickAndPlaceMenu;
 using VRQualityTesting.Scripts.Utility;
 
 namespace VRQualityTesting.Scripts.PickAndPlace
@@ -48,10 +45,10 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         [HideInInspector] public float goalSize { get; set; }
         [HideInInspector] public float goalHeight { get; set; }
         #endregion
-        private CustomLogger logger;
+        // private CustomLogger logger;
         void Start()
         {
-            logger = new CustomLogger(@"C:\Users\tyco_\Documents\faks\VR-Quality-Testing\Debug.log");
+            // logger = new CustomLogger(@"C:\Users\tyco_\Documents\faks\VR-Quality-Testing\Debug.log");
             spawnGoal();
             spawnNewPlacement();
         }
@@ -110,7 +107,6 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             Vector3 position = new Vector3(0, 0, 0);
             float randObstacleSize;
 
-            bool newLoop;
             int randObstacleCount = UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount + 1);
             for (int i = 0; i < randObstacleCount; i++)
             {
