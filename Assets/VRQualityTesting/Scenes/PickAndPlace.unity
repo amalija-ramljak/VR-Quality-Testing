@@ -68403,8 +68403,8 @@ MonoBehaviour:
   HandSide: 0
   DefaultHoldType: 0
   DefaultGrabButton: 0
-  GripAmount: 0.9
-  ReleaseGripAmount: 0.5
+  GripAmount: 0.6
+  ReleaseGripAmount: 0.3
   GrabCheckSeconds: 0.5
   EquipGrabbableOnStart: {fileID: 0}
   HandsGraphics: {fileID: 5629437627615531185}
@@ -68461,14 +68461,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6969157711711829898}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!33 &6969157711711829905
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -82313,14 +82313,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516297023191065214}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!33 &8516297023191065189
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -82440,8 +82440,8 @@ MonoBehaviour:
   HandSide: 1
   DefaultHoldType: 0
   DefaultGrabButton: 0
-  GripAmount: 0.9
-  ReleaseGripAmount: 0.5
+  GripAmount: 0.6
+  ReleaseGripAmount: 0.3
   GrabCheckSeconds: 0.5
   EquipGrabbableOnStart: {fileID: 0}
   HandsGraphics: {fileID: 8516297021558818718}
