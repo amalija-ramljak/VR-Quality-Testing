@@ -49,19 +49,17 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         [HideInInspector] public float goalHeight { get; set; }
         #endregion
 
-        // private CustomLogger logger;
         void Start()
         {
-            // logger = new CustomLogger(@"C:\Users\Netmedia1\Desktop\DipPro\Debug.log");
             spawnGoal();
             spawnNewPlacement();
         }
 
         private void spawnGoal()
         {
-            // logger.WriteLine("spawnGoal");
             this.transform.rotation = Quaternion.identity;
             goal_obj = Instantiate(goalPrefab, new Vector3(0f, goalHeight, goalDistance), Quaternion.identity, this.transform);
+            Debug.Log(goal_obj.tag);
             goal_obj.transform.localScale = new Vector3(goalSize, 0.1f, goalSize);
             this.transform.Rotate(new Vector3(0f, goalRotationOffset, 0f));
             Physics.SyncTransforms();
@@ -69,27 +67,47 @@ namespace VRQualityTesting.Scripts.PickAndPlace
 
         private void spawnNewPlacement()
         {
-            // logger.WriteLine("spawnNewPlacement");
-            objectParent.rotation = Quaternion.identity;
             spawnObject();
             spawnObstacles();
+
+            objectParent.rotation = Quaternion.identity;
             objectParent.Rotate(obj_spawn_rotation);
+
+            setTags();
+            enableRigidbodies();
+
             Physics.SyncTransforms();
         }
 
-        private void setNewRotation(){
+        private void setTags()
+        {
+            foreach (GameObject clutterElement in ProxyList)
+            {
+                clutterElement.tag = "Untagged";
+            }
+            goal_obj.tag = "Untagged";
+            proxy_obj.tag = "Target";
+        }
+
+        private void enableRigidbodies()
+        {
+            enableRigidbody(proxy_obj);
+        }
+
+        private void setNewRotation()
+        {
             obj_spawn_rotation = new Vector3(0f, UnityEngine.Random.Range(-objectMaxRotationOffset, objectMaxRotationOffset), 0f);
         }
 
         private void spawnObject()
         {
-            // logger.WriteLine("spawnObject");
             Vector3 obj_spawn_position = new Vector3(0, 0, 0);
             Shape shapeType = pickShape();
             GameObject shape = getShapePrefabFromEnum(shapeType);
             var randScale = UnityEngine.Random.Range(objectMinSize, objectMaxSize);
 
             proxy_obj = Instantiate(shape, obj_spawn_position, Quaternion.identity, objectParent);
+            CollisionTest collisions = proxy_obj.GetComponent<CollisionTest>();
             proxy_obj.transform.localScale *= randScale;
             float z, y;
             do
@@ -108,22 +126,15 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                 objectParent.transform.Rotate(obj_spawn_rotation);
 
                 Physics.SyncTransforms();
-
-                // logger.WriteLine("spawnObject loop");
-                // logger.WriteLine(checkIntersections(proxy_obj));
-                // logger.WriteLine(Vector3.Distance(proxy_obj.transform.position, player.position) > objectMaxDistance);
-            } while (checkIntersections(proxy_obj)
+            } while (collisions.getIntersectionCount() > 0
                     || Vector3.Distance(proxy_obj.transform.position, player.position) > objectMaxDistance);
-
-            proxy_obj.tag = "Target";
-            enableRigidbody(proxy_obj);
 
             objects.Add(new PAPObject(obj_spawn_position, randScale, shapeType));
         }
 
         private void spawnObstacles()
         {
-            // logger.WriteLine("spawnObstacles");
+            CollisionTest collisions;
             var clutter = new List<PAPObstacle>();
             GameObject proxy = null;
             Vector3 position = new Vector3(0, 0, 0);
@@ -133,13 +144,13 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             int randObstacleCount = UnityEngine.Random.Range(obstacleMinCount, obstacleMaxCount + 1);
             for (int i = 0; i < randObstacleCount; i++)
             {
-                // logger.WriteLine("spawnObstacles obstacle");
                 randObstacleSize = UnityEngine.Random.Range(obstacleMinSize, obstacleMaxSize);
                 proxy = Instantiate(obstaclePrefab, position, Quaternion.identity, objectParent);
+                collisions = proxy.GetComponent<CollisionTest>();
+
                 proxy.transform.localScale *= randObstacleSize;
                 do
                 {
-                    // logger.WriteLine("spawnObstacles obstacle loop");
                     objectParent.transform.rotation = Quaternion.identity;
 
                     position = proxy_obj.transform.position + UnityEngine.Random.insideUnitSphere * UnityEngine.Random.Range(obstacleMinDistance, obstacleMaxDistance);
@@ -148,7 +159,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                     objectParent.transform.Rotate(obj_spawn_rotation);
                     Physics.SyncTransforms();
                     attempts++;
-                } while (checkIntersections(proxy, true, true, true) && attempts < 10);
+                } while (collisions.getIntersectionCount() > 0 && attempts < 10);
 
                 ProxyList.Add(proxy);
 
