@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 4227810997269982072}
   - component: {fileID: 6987629220757735133}
   - component: {fileID: 3831892047851389629}
+  - component: {fileID: -5845388538528076215}
   m_Layer: 0
   m_Name: ObjectSquarePrefab
-  m_TagString: Untagged
+  m_TagString: CollisionTesting
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,3 +183,15 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 126
   m_CollisionDetection: 3
+--- !u!114 &-5845388538528076215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4227810997269982071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e05f533497aa24b8806bfbbda270f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
