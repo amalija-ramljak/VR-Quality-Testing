@@ -45,10 +45,9 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         [HideInInspector] public float goalSize { get; set; }
         [HideInInspector] public float goalHeight { get; set; }
         #endregion
-        // private CustomLogger logger;
+
         void Start()
         {
-            // logger = new CustomLogger(@"C:\Users\tyco_\Documents\faks\VR-Quality-Testing\Debug.log");
             spawnGoal();
             spawnNewPlacement();
         }
