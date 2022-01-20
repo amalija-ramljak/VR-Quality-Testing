@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.2288695, g: 0.4209354, b: 0.7486709, a: 1}
+  m_IndirectSpecularColor: {r: 0.22886854, g: 0.420933, b: 0.7486693, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 3e363ad6c35aa4948a262b70c87f34c3,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -992,6 +993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1269a2e132f24ef8b14c9a37fd1287d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HandSide: 0
 --- !u!4 &172718168 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4025704486191332, guid: 3a33ce58c20826a4ea7253f84444654b,
@@ -31005,6 +31007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1269a2e132f24ef8b14c9a37fd1287d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HandSide: 0
 --- !u!114 &2829697581891060060
 MonoBehaviour:
   m_ObjectHideFlags: 0
