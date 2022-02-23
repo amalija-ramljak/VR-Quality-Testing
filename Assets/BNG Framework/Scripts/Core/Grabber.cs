@@ -222,6 +222,9 @@ namespace BNG {
                 velocityTracker = gameObject.AddComponent<VelocityTracker>();
                 velocityTracker.controllerHand = HandSide;
             }
+
+            this.transform.localPosition = new Vector3(0, 0, 0);
+            this.transform.localRotation = new Quaternion(0, 0, 0, 1);
         }
         
         void Update() {

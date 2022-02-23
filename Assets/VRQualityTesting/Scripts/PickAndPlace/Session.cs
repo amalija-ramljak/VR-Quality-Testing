@@ -99,7 +99,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                     detailedInformation.AddRange(
                         obj.clutter.Select(
                             clutterObj =>
-                                $"{clutterObj.size}" +
+                                $"{clutterObj.size}, " +
                                 $"{clutterObj.initialCoords.ToString("F3")}, " +
                                 $"{clutterObj.finalCoords.ToString("F3")}, " +
                                 $"{Vector3.Distance(clutterObj.initialCoords, clutterObj.finalCoords)}"

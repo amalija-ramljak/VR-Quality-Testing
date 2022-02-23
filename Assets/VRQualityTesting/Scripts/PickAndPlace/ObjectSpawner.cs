@@ -182,7 +182,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             var oldClutter = objects[objects.Count - 1].clutter;
             for (int i = 0; i < ProxyList.Count; i++)
             {
-                newClutter.Add(new PAPObstacle(oldClutter[i].initialCoords, ProxyList[i].transform.position, oldClutter[i].size));
+                newClutter.Add(new PAPObstacle(oldClutter[i].initialCoords, ProxyList[i].transform.localPosition, oldClutter[i].size));
                 Destroy(ProxyList[i]);
             }
             objects[objects.Count - 1].setClutter(newClutter);
