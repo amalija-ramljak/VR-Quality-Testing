@@ -92,6 +92,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                         $"Created at position: {obj.spawnPosition.ToString("F3")}",
                         $"Created at time: {obj.BirthTimestamp.ToString(TimestampFormat)}",
                         $"Placed at time: {obj.DeathTimestamp.ToString(TimestampFormat)}",
+                        $"Placed offset: {obj.placedOffset.ToString()}",
                         $"Clutter data ({obj.clutter.Count} objects in clutter)",
                         "Size, Initial position, Final position, Euclidean distance",
                     });
@@ -102,7 +103,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
                                 $"{clutterObj.size}, " +
                                 $"{clutterObj.initialCoords.ToString("F3")}, " +
                                 $"{clutterObj.finalCoords.ToString("F3")}, " +
-                                $"{Vector3.Distance(clutterObj.initialCoords, clutterObj.finalCoords)}"
+                                $"{Vector3.Distance(clutterObj.initialCoords, clutterObj.finalCoords).ToString("F3")}"
                         )
                     );
                 }

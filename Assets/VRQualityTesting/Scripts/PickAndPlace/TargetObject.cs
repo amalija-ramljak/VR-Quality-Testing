@@ -11,6 +11,7 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         public DateTime DeathTimestamp { get; set; }
         public bool isPlaced = false;
         public Vector3 spawnPosition;
+        public float placedOffset;
         public float spawnSize;
         public ObjectSpawner.Shape shape;
         public List<PAPObstacle> clutter;
@@ -25,6 +26,11 @@ namespace VRQualityTesting.Scripts.PickAndPlace
         public void setPlaced(bool isPlaced)
         {
             this.isPlaced = isPlaced;
+        }
+
+        public void setPlacedOffset(float placedOffset)
+        {
+            this.placedOffset = placedOffset;
         }
 
         public void setClutter(List<PAPObstacle> clutter)

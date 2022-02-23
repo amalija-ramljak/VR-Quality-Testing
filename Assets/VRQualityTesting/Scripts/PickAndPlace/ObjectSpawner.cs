@@ -187,7 +187,9 @@ namespace VRQualityTesting.Scripts.PickAndPlace
             }
             objects[objects.Count - 1].setClutter(newClutter);
             objects[objects.Count - 1].setPlaced(true);
-
+            objects[objects.Count - 1].setPlacedOffset(Vector2.Distance(new Vector2(proxy_obj.transform.position.x, proxy_obj.transform.position.z), 
+                                                                            new Vector2(goal_obj.transform.position.x, goal_obj.transform.position.z)));
+            
             ProxyList.Clear();
             Destroy(proxy_obj);
 
